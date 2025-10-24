@@ -7,7 +7,7 @@ from uipc import Logger, Timer, Transform, Quaternion, Vector3, Vector2, view, b
 from uipc.core import Engine, World, Scene
 from uipc.geometry import tetmesh, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.geometry import SimplicialComplexIO
-from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli
+from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli, StrainLimitingBaraffWitkinShell
 from uipc.gui import SceneGUI 
 from uipc.unit import MPa, GPa, kPa 
 
@@ -26,7 +26,7 @@ world = World(engine)
 
 config = Scene.default_config()
 config['dt'] = 0.01
-config['contact']['d_hat'] = 0.01
+config['contact']['d_hat'] = 0.001
 print(config)
 scene = Scene(config)
 
@@ -37,11 +37,12 @@ t.scale(2.0)
 io = SimplicialComplexIO(t)
 cloth_mesh = io.read(f'{trimesh_path}/grid20x20.obj')
 label_surface(cloth_mesh)
-nks = NeoHookeanShell()
+#nks = NeoHookeanShell()
+slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-moduli = ElasticModuli.youngs_poisson(10 * kPa, 0.499)
-nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
-dsb.apply_to(cloth_mesh, bending_stiffness=10.0)
+moduli = ElasticModuli.youngs_poisson(5 * MPa, 0.4)
+slbws.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
+dsb.apply_to(cloth_mesh, bending_stiffness=0.006)
 view(cloth_mesh.positions())[:] += 1.0
 cloth.geometries().create(cloth_mesh)
 

@@ -13,7 +13,7 @@ from uipc.gui import SceneGUI
 from uipc.unit import MPa, GPa
 from asset_dir import AssetDir
 
-Logger.set_level(Logger.Level.Info)
+Logger.set_level(Logger.Level.Warn)
 
 workspace = AssetDir.output_path(__file__)
 engine = Engine('cuda', workspace)
@@ -89,12 +89,8 @@ animator.insert(cube_object, animate_cube)
 
 world.init(scene)
 
-scene.sanity_checker().report()
-
-
-sgui = SceneGUI(scene)
-
 ps.init()
+sgui = SceneGUI(scene)
 sgui.register()
 sgui.set_edge_width(1)
 

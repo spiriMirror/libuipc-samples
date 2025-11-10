@@ -95,7 +95,7 @@ def on_update():
         move = True
     
     if(imgui.Button('Move ABD Transform Y')):
-        abd_state_accessor.copy_to(abd_state_geo) # Get State data from backend
+        abd_state_accessor.copy_to(abd_state_geo) # Get state data from backend
         view(abd_state_geo.transforms())[:, 0:3, 3] += np.array([0.0, 0.1, 0.0])
         abd_state_accessor.copy_from(abd_state_geo) # Copy modified data back to backend
         move = True

@@ -21,8 +21,8 @@ def process_surface(sc: SimplicialComplex):
     sc = flip_inward_triangles(sc)
     return sc
 
-Timer.enable_all()
-Logger.set_level(Logger.Level.Info)
+# Timer.enable_all()
+Logger.set_level(Logger.Level.Warn)
 workspace = AssetDir.output_path(__file__)
 folder = AssetDir.folder(__file__)
 
@@ -30,16 +30,21 @@ engine = Engine('cuda', workspace)
 world = World(engine)
 
 config = Scene.default_config()
-config['dt'] = 0.033
-config['contact']['d_hat']              = 0.01
+dt = 0.01
+config['dt'] = dt
+config['contact']['d_hat']              = np.sqrt(0.000834927281348777782)
 config['line_search']['max_iter']       = 8
-config['newton']['velocity_tol']       = 0.2
+config['newton']['velocity_tol']       = 0.1
+config['newton']['transrate_tol'] = 100.0
+config['contact']['friction']['enable'] = False
 config['cfl']['enable'] = False
+# config['collision_detection']['method'] = 'linear_bvh'
+config['collision_detection']['method'] = 'stackless_bvh'
 print(config)
 
 scene = Scene(config)
 abd = AffineBodyConstitution()
-scene.contact_tabular().default_model(0.02, 10 * GPa)
+scene.contact_tabular().default_model(0.02, 142105.0 / dt**2)
 default_contact = scene.contact_tabular().default_element()
 
 io = SimplicialComplexIO()
@@ -60,13 +65,13 @@ cube_obj = scene.objects().create('cubes')
 ball_obj = scene.objects().create('balls')
 link_obj = scene.objects().create('links')
 
-abd.apply_to(cube, 10 * MPa)
+abd.apply_to(cube, 100 * MPa)
 default_contact.apply_to(cube)
 
-abd.apply_to(ball, 10 * MPa)
+abd.apply_to(ball, 100 * MPa)
 default_contact.apply_to(ball)
 
-abd.apply_to(link, 10 * MPa)
+abd.apply_to(link, 100 * MPa)
 default_contact.apply_to(link)
 
 def build_mesh(json, obj: uipc.core.Object, mesh:SimplicialComplex):
@@ -125,18 +130,20 @@ def on_update():
     global run
     if(imgui.Button('run & stop')):
         run = not run
+    
+    if(imgui.Button('recover')):
+        if(world.recover(66)):
+            world.retrieve()
+            sgui.update()
         
     if(run):
-        if(world.recover(world.frame() + 1)):
-            world.retrieve()
-        else:
-            world.advance()
-            world.retrieve()
-            world.dump()
-            Timer.report()
-
+        world.advance()
+        print(f'Frame {world.frame()}')
+        world.retrieve()
         sgui.update()
 
 ps.set_user_callback(on_update)
 ps.show()
+
+
 

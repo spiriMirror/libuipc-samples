@@ -1,6 +1,7 @@
 import numpy as np
 import polyscope as ps
 from polyscope import imgui
+import keyboard
 from uipc import view
 from uipc import Engine, World, Scene, Animation
 from uipc import Vector3, Vector2, Transform, Logger, Quaternion, AngleAxis
@@ -17,9 +18,8 @@ Logger.set_level(Logger.Level.Warn)
 
 class IO:
     @staticmethod
-    def is_key_down(key_str):
-        key = imgui.__dict__[f'ImGuiKey_{key_str}']
-        return imgui.IsKeyDown(imgui.GetKeyIndex(key))
+    def is_key_down(key_str:str):
+        return keyboard.is_pressed(key_str.lower())
     
     @staticmethod
     def movement():

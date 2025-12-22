@@ -6,9 +6,9 @@ This library is a collection of sample programs that demonstrate how to use the 
 
 Before you using this library, please refer to the [Libuipc](https://github.com/spiriMirror/libuipc) to build and install the library.
 
-To run the python GUI sample, you need to install the following python packages:
+To run the python interactable sample, you may need to install the required dependencies:
 
-```
-pip install polyscope==2.3.0
+```bash
+python -m pip install -r requirements.txt
 ```
 

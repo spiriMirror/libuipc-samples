@@ -3,7 +3,7 @@ import polyscope as ps
 from polyscope import imgui
 
 from uipc import view
-from uipc import Vector3, Vector2, Transform, Logger, Quaternion, AngleAxis
+from uipc import Logger
 from uipc import builtin
 
 from uipc.core import *

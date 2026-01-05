@@ -8,13 +8,19 @@ from uipc import builtin
 from uipc.unit import MPa
 from uipc.geometry import SimplicialComplexIO, SimplicialComplex, label_surface, linemesh
 from uipc.geometry import affine_body
-from uipc.constitution import AffineBodyConstitution, AffineBodyRevoluteJoint, AffineBodyPrismaticJoint, ExternalArticulationConstraint, NeoHookeanShell, DiscreteShellBending, ElasticModuli
+from uipc.constitution import (AffineBodyConstitution, 
+                               AffineBodyRevoluteJoint, 
+                               AffineBodyPrismaticJoint, 
+                               ExternalArticulationConstraint, 
+                               NeoHookeanShell,
+                               DiscreteShellBending, 
+                               ElasticModuli2D)
 from uipc.unit import GPa, kPa
 from uipc.gui import SceneGUI
 from asset_dir import AssetDir
 
-Logger.set_level(Logger.Level.Info)
 Timer.enable_all()
+Logger.set_level(Logger.Level.Info)
 
 this_output_path = AssetDir.output_path(__file__)
 trimesh_path = AssetDir.trimesh_path()
@@ -202,7 +208,7 @@ label_surface(cloth_mesh)
 # Apply cloth constitutions
 nks = NeoHookeanShell()
 dsb = DiscreteShellBending()
-moduli = ElasticModuli.youngs_poisson(500 * kPa, 0.49)
+moduli = ElasticModuli2D.youngs_poisson(500 * kPa, 0.49)
 nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
 dsb.apply_to(cloth_mesh, bending_stiffness=1.0)
 

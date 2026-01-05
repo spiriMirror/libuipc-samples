@@ -83,8 +83,7 @@ animator.insert(cube_object, animate_cube)
 
 world.init(scene)
 
-scene.sanity_checker().report()
-
+world.sanity_checker().report()
 
 sgui = SceneGUI(scene)
 

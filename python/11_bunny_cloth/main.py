@@ -7,7 +7,7 @@ from uipc import Logger, Timer, Transform, Quaternion, Vector3, Vector2, view, b
 from uipc.core import Engine, World, Scene
 from uipc.geometry import tetmesh, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.geometry import SimplicialComplexIO
-from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli, StrainLimitingBaraffWitkinShell
+from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli2D, StrainLimitingBaraffWitkinShell
 from uipc.gui import SceneGUI 
 from uipc.unit import MPa, GPa, kPa 
 
@@ -40,7 +40,7 @@ label_surface(cloth_mesh)
 #nks = NeoHookeanShell()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-moduli = ElasticModuli.youngs_poisson(5 * MPa, 0.4)
+moduli = ElasticModuli2D.youngs_poisson(5 * MPa, 0.4)
 slbws.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
 dsb.apply_to(cloth_mesh, bending_stiffness=0.006)
 view(cloth_mesh.positions())[:] += 1.0

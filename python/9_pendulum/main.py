@@ -4,17 +4,16 @@ from polyscope import imgui
 
 from uipc import view
 from uipc import Logger, Timer, Animation
-from uipc import Vector3, Vector2, Transform, Quaternion, AngleAxis
+from uipc import Vector3, Transform
 from uipc import builtin
-from uipc.core import Engine, World, Scene, SceneIO, Object
-from uipc.geometry import GeometrySlot, SimplicialComplex, SimplicialComplexSlot, SimplicialComplexIO, label_surface
+from uipc.core import Engine, World, Scene, SceneIO
+from uipc.geometry import SimplicialComplexSlot, SimplicialComplexIO, label_surface
 from uipc.constitution import AffineBodyConstitution, RotatingMotor
 from uipc.unit import MPa
 from uipc.gui import SceneGUI
 
 from asset_dir import AssetDir
 
-Timer.enable_all()
 Logger.set_level(Logger.Level.Warn)
 
 workspace = AssetDir.output_path(__file__)
@@ -92,20 +91,10 @@ def on_update():
     global run
     if(imgui.Button('run & stop')):
         run = not run
-    if(imgui.Button('recover')):
-        world.recover(1)
-        world.retrieve()
-        sgui.update()
         
     if(run):
-        if(world.recover(world.frame() + 1)):
-            world.retrieve()
-            # ps.screenshot(f'{workspace}/screenshot/{world.frame()}.png')
-        else:
-            world.advance()
-            world.retrieve()
-            world.dump()
-            Timer.report()
+        world.advance()
+        world.retrieve()
         sgui.update()
 
 ps.set_user_callback(on_update)

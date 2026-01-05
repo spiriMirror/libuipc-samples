@@ -7,10 +7,9 @@ from uipc import Logger, Timer, Transform, Quaternion, Vector3, Vector2, view, b
 from uipc.core import Engine, World, Scene
 from uipc.geometry import tetmesh, label_surface, compute_mesh_d_hat, ground
 from uipc.geometry import SimplicialComplexIO
-from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli
+from uipc.constitution import AffineBodyConstitution
 from uipc.gui import SceneGUI 
-from uipc.unit import MPa, GPa, kPa
-import time
+from uipc.unit import MPa
 
 from asset_dir import AssetDir
 

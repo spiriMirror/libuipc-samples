@@ -30,11 +30,9 @@ engine = Engine('cuda', workspace)
 world = World(engine)
 
 config = Scene.default_config()
-config['dt'] = 0.033
+config['dt'] = 0.01
 config['contact']['d_hat']              = 0.01
-config['line_search']['max_iter']       = 8
 config['newton']['velocity_tol']       = 0.2
-config['cfl']['enable'] = False
 print(config)
 
 scene = Scene(config)
@@ -60,13 +58,13 @@ cube_obj = scene.objects().create('cubes')
 ball_obj = scene.objects().create('balls')
 link_obj = scene.objects().create('links')
 
-abd.apply_to(cube, 10 * MPa)
+abd.apply_to(cube, 100 * MPa)
 default_contact.apply_to(cube)
 
-abd.apply_to(ball, 10 * MPa)
+abd.apply_to(ball, 100 * MPa)
 default_contact.apply_to(ball)
 
-abd.apply_to(link, 10 * MPa)
+abd.apply_to(link, 100 * MPa)
 default_contact.apply_to(link)
 
 def build_mesh(json, obj: uipc.core.Object, mesh:SimplicialComplex):
@@ -127,13 +125,13 @@ def on_update():
         run = not run
         
     if(run):
-        if(world.recover(world.frame() + 1)):
-            world.retrieve()
-        else:
-            world.advance()
-            world.retrieve()
-            world.dump()
-            Timer.report()
+        # if(world.recover(world.frame() + 1)):
+        #     world.retrieve()
+        # else:
+        world.advance()
+        world.retrieve()
+        world.dump()
+        Timer.report()
 
         sgui.update()
 

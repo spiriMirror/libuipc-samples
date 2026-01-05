@@ -14,7 +14,6 @@ from uipc.gui import SceneGUI
 
 from asset_dir import AssetDir
 
-Timer.enable_all()
 Logger.set_level(Logger.Level.Warn)
 
 workspace = AssetDir.output_path(__file__)
@@ -27,9 +26,9 @@ config = Scene.default_config()
 config['dt'] = 0.005
 config['contact']['d_hat'] = 0.02
 config['contact']['friction']['enable'] = False
-config['newton']['velocity_tol']       = 0.05
 config['gravity'] = [[0.0], [-0.0], [0.0]]
 print(config)
+
 scene = Scene(config)
 
 # begin setup the scene
@@ -89,17 +88,9 @@ def on_update():
         sgui.update()
         
     if(run):
-        if(world.recover(world.frame() + 1)):
-            world.retrieve()
-            # ps.screenshot(f'{workspace}/screenshot/{world.frame()}.png')
-        else:
-            world.advance()
-            world.retrieve()
-            world.dump()
-            Timer.report()
+        world.advance()
+        world.retrieve()
         sgui.update()
-        if(world.frame() >= 2000):
-            run = False
 
 ps.set_user_callback(on_update)
 ps.show()

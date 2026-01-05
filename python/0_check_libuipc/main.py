@@ -36,30 +36,4 @@ if __name__ == '__main__':
     print(f'MPa={unit.MPa}')
     print(f'GPa={unit.GPa}')
 
-    Logger.set_level(Logger.Warn)
-    
-    print('''
-* The first time to initialize the engine will take a while (maybe several minutes)
-  because the cuda kernels need to be compiled.
-''')
-
-    def init_engine():
-        engine = Engine('cuda', workspace=AssetDir.output_path(__file__))
-        time.sleep(0.5) # Just make some delay
-        print(f'Engine initialized: {engine}')
-
-    start_time = time.time()
-    symbols = ['|', '/', '-', '\\']
-    i = 0
-
-    rt = ResidentThread()
-
-    rt.post(init_engine)
-    while not rt.is_ready():
-        print('Waiting for cuda engine to initialize. ', end='')
-        current_time = time.time()
-        elapsed_time = current_time - start_time
-        print(f'Elapsed time: {elapsed_time:.2f} seconds', end='')
-        print(f' {symbols[i % len(symbols)]}', end='\r')
-        i += 1
-        time.sleep(0.05)
+    engine = Engine('cuda', workspace=AssetDir.output_path(__file__))

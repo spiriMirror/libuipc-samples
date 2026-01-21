@@ -88,7 +88,6 @@ world.sanity_checker().report()
 sgui = SceneGUI(scene)
 
 ps.init()
-ps.set_ground_plane_height(0)
 tri_surf, _, _ = sgui.register()
 tri_surf.set_edge_width(1)
 

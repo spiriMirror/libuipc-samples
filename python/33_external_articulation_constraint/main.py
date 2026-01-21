@@ -93,7 +93,7 @@ ref_dof_prev_view[:] = affine_body.transform_to_q(transform_view)  # Shape: (3, 
 # Enable external kinetic for all instances
 external_kinetic = abd_mesh.instances().find(builtin.external_kinetic)
 external_kinetic_view = view(external_kinetic)
-external_kinetic_view[:] = 0
+external_kinetic_view[:] = 1
 
 geo_slot, rest_geo_slot = links.geometries().create(abd_mesh)
 
@@ -157,13 +157,16 @@ articulation = eac.create_geometry(joint_geos, indices)
 mass = articulation['joint_joint'].find('mass')
 print(articulation)
 # joint mass
-# [1e4, 5e3]
-# [5e3, 1e4]
+mass_00 = 1.2
+mass_01 = 1.0
+mass_11 = 1.0
 
 mass_view = view(mass)
-mass_mat = np.eye(2) * 1e4
-mass_mat[0, 1] = 5e3
-mass_mat[1, 0] = 5e3
+mass_mat = np.zeros((2, 2), dtype=np.float32)
+mass_mat[0, 0] = mass_00
+mass_mat[0, 1] = mass_01
+mass_mat[1, 0] = mass_01
+mass_mat[1, 1] = mass_11
  
 mass_view[:] = mass_mat.flatten()
 
@@ -175,9 +178,7 @@ articulation_object.geometries().create(articulation)
 # GUI control variables
 delta_theta_tilde_0 = np.pi / 6.0 # revolute joint angular velocity
 delta_theta_tilde_1 = 0.0  # prismatic joint linear velocity
-mass_00 = 1e4
-mass_01 = 5e3
-mass_11 = 1e4
+
 
 # Animator to update delta_theta_tilde from GUI
 def update_articulation(info: Animation.UpdateInfo):
@@ -269,17 +270,15 @@ def on_update():
     changed4, mass_11 = imgui.SliderFloat(
         'Mass 11', 
         mass_11, 
-        1e4, 
-        1e5
+        1.0,
+        5.0
     )
-    
-    max_mass_01 = min(mass_00, mass_11)
     
     changed3, mass_01 = imgui.SliderFloat(
         'Mass 01', 
         mass_01, 
-        1e3, 
-        max_mass_01
+        1.0, 
+        5.0
     )
     
     

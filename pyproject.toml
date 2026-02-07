@@ -1,0 +1,11 @@
+[project]
+name = "libuipc-samples"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "keyboard>=0.13.5",
+    "pyuipc>=0.0.6",
+    "trimesh>=4.11.1",
+]

@@ -32,7 +32,8 @@ world = World(engine)
 config = Scene.default_config()
 config['dt'] = 0.01
 config['contact']['d_hat']              = 0.01
-config['newton']['velocity_tol']       = 0.2
+config['newton']['transrate_tol'] = 10
+config['newton']['velocity_tol']       = 0.4
 print(config)
 
 scene = Scene(config)

@@ -1,8 +1,8 @@
 import numpy as np
+
 import polyscope as ps
 from polyscope import imgui
 
-import uipc
 from uipc import Logger, Timer, Transform, Vector3, AngleAxis, view, builtin
 from uipc.core import Engine, World, Scene
 from uipc.geometry import label_surface, ground
@@ -10,7 +10,7 @@ from uipc.geometry import SimplicialComplexIO
 from uipc.constitution import (
     AffineBodyConstitution,
     DiscreteShellBending,
-    ElasticModuli,
+    ElasticModuli2D,
     StrainLimitingBaraffWitkinShell,
 )
 from uipc.gui import SceneGUI
@@ -18,34 +18,32 @@ from uipc.unit import MPa, kPa
 
 from asset_dir import AssetDir
 
+Logger.set_level(Logger.Level.Info)
+
 Timer.enable_all()
-Logger.set_level(Logger.Level.Warn)
-
-workspace = AssetDir.output_path(__file__)
 trimesh_path = AssetDir.trimesh_path()
+output_path = AssetDir.output_path(__file__)
 
-engine = Engine('cuda', workspace)
+engine = Engine('cuda', output_path)
 world = World(engine)
 
 config = Scene.default_config()
-config['dt'] = 0.02
+config['dt'] = 0.01
 config['contact']['d_hat'] = 0.001
-config['contact']['enable'] = True
-config['contact']['friction']['enable'] = False
 config['contact']['constitution'] = 'ipc'
 config['gravity'] = [[0.0], [0.0], [-9.8]]
-config['newton']['velocity_tol'] = 0.1
+config['newton']['velocity_tol'] = 0.5
 config['newton']['transrate_tol'] = 10
 config['linear_system']['tol_rate'] = 1e-3
+print(config)
 scene = Scene(config)
 
-scene.contact_tabular().default_model(0.0, 1.0e7)
+scene.contact_tabular().default_model(0.02, 10 * MPa)
 
 abd = AffineBodyConstitution()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-cloth_moduli = ElasticModuli.youngs_poisson(60 * kPa, 0.49)
-
+cloth_moduli = ElasticModuli2D.youngs_poisson(60 * kPa, 0.49)
 
 def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending_stiffness: float):
     pre = Transform.Identity()
@@ -60,10 +58,9 @@ def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending
     cloth_obj = scene.objects().create(name)
     cloth_obj.geometries().create(cloth_mesh)
 
-
-# --------------------------------------------------------------------------
-# Cloth stack (2 layers)
-# --------------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Cloth stack
+# ----------------------------------------------------------------------
 create_cloth(
     name='cloth_large',
     mesh_file=f'{trimesh_path}/grid80x80.obj',
@@ -73,7 +70,7 @@ create_cloth(
     bending_stiffness=10.0,
 )
 create_cloth(
-    name='cloth_small',
+    name='cloth_mid',
     mesh_file=f'{trimesh_path}/grid40x40.obj',
     scale=0.3,
     pos=(0.5, 0.0, 0.14),
@@ -89,7 +86,7 @@ create_cloth(
     bending_stiffness=40.0,
 )
 create_cloth(
-    name='cloth_small',
+    name='cloth_tiny',
     mesh_file=f'{trimesh_path}/grid10x10.obj',
     scale=0.1,
     pos=(0.5, 0.0, 0.18),
@@ -97,9 +94,9 @@ create_cloth(
     bending_stiffness=40.0,
 )
 
-# --------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 # Fixed cube grid (4x4)
-# --------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 cube_obj = scene.objects().create('cubes')
 cube_size = 0.05
 cube_height = 0.02501
@@ -125,8 +122,6 @@ for i in range(4):
         t = Transform.Identity()
         t.translate([x, y, cube_height])
         trans_view[idx] = t.matrix()
-        # print volume of the cube
-        cube_volume = cube_mesh.instances().find(builtin.volume).view()
         is_fixed_view[idx] = 1
         idx += 1
 
@@ -146,7 +141,6 @@ sgui.set_edge_width(1.0)
 
 run = False
 
-
 def on_update():
     global run
     if imgui.Button('run & stop'):
@@ -156,7 +150,7 @@ def on_update():
         world.advance()
         world.retrieve()
         sgui.update()
-
+        Timer.report()
 
 ps.set_user_callback(on_update)
 ps.show()

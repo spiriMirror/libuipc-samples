@@ -1,11 +1,13 @@
+import polyscope as ps
+
 from uipc import Logger
 from uipc.geometry import SimplicialComplexIO
 from uipc.constitution import AffineBodyConstitution
 from uipc.unit import MPa
-import polyscope as ps
+from uipc.dev.mesh_doctor import MeshDoctor
 
 from asset_dir import AssetDir
-from doctor import MeshDoctor
+
 
 Logger.set_level(Logger.Level.Info)
 
@@ -16,11 +18,11 @@ trimesh_path = AssetDir.trimesh_path()
 # Create MeshDoctor with GUI enabled
 doctor = MeshDoctor(workspace, with_gui=True)
 
-# Load the bad mesh
+# Load the mesh to be checked
 io = SimplicialComplexIO()
-mesh = io.read(rf"D:\Assets\trashbin.obj")
+mesh = io.read(f"{trimesh_path}/bad_abd_mesh.obj")
 
-# Create AffineBodyConstitution
+# Create constitution to be checked
 abd = AffineBodyConstitution()
 
 # Check the mesh

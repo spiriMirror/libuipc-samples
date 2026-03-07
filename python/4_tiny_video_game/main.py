@@ -5,7 +5,7 @@ import keyboard
 from uipc import view
 from uipc import Engine, World, Scene, Animation
 from uipc import Vector3, Vector2, Transform, Logger, Quaternion, AngleAxis
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.geometry import GeometrySlot, SimplicialComplex, SimplicialComplexIO, pointcloud, linemesh, label_surface, label_triangle_orient, flip_inward_triangles, ground
 from uipc.constitution import AffineBodyConstitution, Particle, HookeanSpring, SoftPositionConstraint
 from uipc.gui import SceneGUI

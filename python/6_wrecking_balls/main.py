@@ -6,7 +6,7 @@ from polyscope import imgui
 import uipc 
 from uipc import view
 from uipc import Vector3, Vector2, Transform, Logger, Quaternion, AngleAxis, Timer
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.core import Engine, World, Scene
 from uipc.geometry import GeometrySlot, SimplicialComplex, SimplicialComplexIO, ground, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.constitution import AffineBodyConstitution
@@ -33,7 +33,7 @@ config = Scene.default_config()
 config['dt'] = 0.01
 config['contact']['d_hat']              = 0.01
 config['newton']['transrate_tol'] = 10
-config['newton']['velocity_tol']       = 0.4
+config['newton']['velocity_tol']       = 1
 print(config)
 
 scene = Scene(config)
@@ -134,7 +134,7 @@ def on_update():
         world.dump()
         Timer.report()
 
-        sgui.update()
+    sgui.update()
 
 ps.set_user_callback(on_update)
 ps.show()

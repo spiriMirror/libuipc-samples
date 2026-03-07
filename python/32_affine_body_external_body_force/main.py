@@ -4,7 +4,7 @@ from polyscope import imgui
 
 from uipc import view
 from uipc import Scene, World, Engine, Transform, Vector3, Matrix4x4, Animation, Logger
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.geometry import SimplicialComplexIO, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.constitution import AffineBodyConstitution, AffineBodyExternalBodyForce
 from uipc.gui import SceneGUI, SimplicialComplex

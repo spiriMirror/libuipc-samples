@@ -4,7 +4,7 @@ from polyscope import imgui
 
 from uipc import view
 from uipc import Scene, World, Engine, Transform, Vector3, Vector12, Animation, Logger, Timer
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.unit import MPa
 from uipc.geometry import SimplicialComplexIO, SimplicialComplex, label_surface, linemesh
 from uipc.geometry import affine_body

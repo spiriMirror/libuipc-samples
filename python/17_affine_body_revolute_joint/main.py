@@ -6,7 +6,7 @@ import json
 from uipc import view
 from uipc import Scene, World, Engine, Transform, Vector3, Logger
 from uipc.gui import SceneGUI
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.geometry import SimplicialComplexIO, SimplicialComplex, label_surface, ground, linemesh
 from uipc.constitution import AffineBodyConstitution, AffineBodyRevoluteJoint
 from asset_dir import AssetDir

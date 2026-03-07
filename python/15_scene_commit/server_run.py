@@ -5,7 +5,7 @@ from polyscope import imgui
 from uipc import view
 from uipc import Logger, Timer, Animation
 from uipc import Vector3, Transform, Quaternion, AngleAxis
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.core import Engine, World, Scene, SceneIO, SceneSnapshot
 from uipc.geometry import GeometrySlot, SimplicialComplex, SimplicialComplexIO, label_surface, label_triangle_orient, flip_inward_triangles, ground
 from uipc.constitution import AffineBodyConstitution, StableNeoHookean

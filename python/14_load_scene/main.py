@@ -6,7 +6,7 @@ from polyscope import imgui
 import uipc 
 from uipc import view
 from uipc import Vector3, Vector2, Transform, Logger, Quaternion, AngleAxis, Timer
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.core import Engine, World, Scene, SceneIO, Object
 from uipc.gui import SceneGUI
 

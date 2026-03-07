@@ -4,7 +4,7 @@ from polyscope import imgui
 from asset_dir import AssetDir
 
 from uipc import Vector3, Vector2, Transform, Logger, Matrix4x4
-from uipc import builtin
+import uipc.builtin as builtin
 from uipc.core import World, Scene, Engine, Animation
 from uipc import view
 from uipc.geometry import SimplicialComplex, SimplicialComplexSlot, SimplicialComplexIO, ground, label_surface

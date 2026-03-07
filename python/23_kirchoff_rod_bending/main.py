@@ -4,7 +4,7 @@ from polyscope import imgui
 
 from uipc import view
 from uipc import Logger
-from uipc import builtin
+import uipc.builtin as builtin
 
 from uipc.core import *
 from uipc.geometry import *

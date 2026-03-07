@@ -5,7 +5,7 @@ from polyscope import imgui
 
 from uipc import Logger, Timer, Transform, Vector3, AngleAxis, view, builtin
 from uipc.core import Engine, World, Scene
-from uipc.geometry import label_surface, ground
+from uipc.geometry import label_surface, ground, mesh_partition
 from uipc.geometry import SimplicialComplexIO
 from uipc.constitution import (
     AffineBodyConstitution,
@@ -34,11 +34,11 @@ config['contact']['constitution'] = 'ipc'
 config['gravity'] = [[0.0], [0.0], [-9.8]]
 config['newton']['velocity_tol'] = 0.5
 config['newton']['transrate_tol'] = 10
-config['linear_system']['tol_rate'] = 1e-3
+config['linear_system']['tol_rate'] = 1e-4
 print(config)
 scene = Scene(config)
 
-scene.contact_tabular().default_model(0.02, 10 * MPa)
+scene.contact_tabular().default_model(0.02, 1e8)
 
 abd = AffineBodyConstitution()
 slbws = StrainLimitingBaraffWitkinShell()
@@ -55,6 +55,7 @@ def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending
     label_surface(cloth_mesh)
     slbws.apply_to(cloth_mesh, moduli=cloth_moduli, mass_density=200, thickness=0.001)
     dsb.apply_to(cloth_mesh, bending_stiffness=bending_stiffness)
+    mesh_partition(cloth_mesh)
     cloth_obj = scene.objects().create(name)
     cloth_obj.geometries().create(cloth_mesh)
 

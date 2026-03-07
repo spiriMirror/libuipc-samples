@@ -13,7 +13,6 @@ from uipc.gui import SceneGUI
 from uipc.unit import MPa, GPa
 from asset_dir import AssetDir
 
-from utils import create_profiler_heatmap
 Logger.set_level(Logger.Level.Info)
 Timer.enable_all()
 workspace = AssetDir.output_path(__file__)
@@ -105,4 +104,3 @@ def on_update():
 
 ps.set_user_callback(on_update)
 ps.show()
-create_profiler_heatmap(Timer.report_as_json())

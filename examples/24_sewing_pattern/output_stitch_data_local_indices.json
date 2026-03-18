@@ -1,0 +1,2254 @@
+[
+    {
+        "panel_1": "wb_back",
+        "edge_1_index": 0,
+        "panel_2": "pant_front_right",
+        "edge_2_index": 3,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 0,
+                "vertex_index_panel_2": 150
+            },
+            {
+                "vertex_index_panel_1": 1,
+                "vertex_index_panel_2": 149
+            },
+            {
+                "vertex_index_panel_1": 2,
+                "vertex_index_panel_2": 148
+            },
+            {
+                "vertex_index_panel_1": 3,
+                "vertex_index_panel_2": 147
+            },
+            {
+                "vertex_index_panel_1": 4,
+                "vertex_index_panel_2": 146
+            },
+            {
+                "vertex_index_panel_1": 5,
+                "vertex_index_panel_2": 145
+            },
+            {
+                "vertex_index_panel_1": 6,
+                "vertex_index_panel_2": 144
+            },
+            {
+                "vertex_index_panel_1": 7,
+                "vertex_index_panel_2": 143
+            },
+            {
+                "vertex_index_panel_1": 8,
+                "vertex_index_panel_2": 142
+            },
+            {
+                "vertex_index_panel_1": 9,
+                "vertex_index_panel_2": 141
+            },
+            {
+                "vertex_index_panel_1": 10,
+                "vertex_index_panel_2": 140
+            },
+            {
+                "vertex_index_panel_1": 11,
+                "vertex_index_panel_2": 139
+            },
+            {
+                "vertex_index_panel_1": 12,
+                "vertex_index_panel_2": 138
+            },
+            {
+                "vertex_index_panel_1": 13,
+                "vertex_index_panel_2": 137
+            },
+            {
+                "vertex_index_panel_1": 14,
+                "vertex_index_panel_2": 136
+            },
+            {
+                "vertex_index_panel_1": 15,
+                "vertex_index_panel_2": 135
+            },
+            {
+                "vertex_index_panel_1": 16,
+                "vertex_index_panel_2": 134
+            },
+            {
+                "vertex_index_panel_1": 17,
+                "vertex_index_panel_2": 133
+            },
+            {
+                "vertex_index_panel_1": 18,
+                "vertex_index_panel_2": 132
+            },
+            {
+                "vertex_index_panel_1": 19,
+                "vertex_index_panel_2": 131
+            },
+            {
+                "vertex_index_panel_1": 20,
+                "vertex_index_panel_2": 130
+            },
+            {
+                "vertex_index_panel_1": 21,
+                "vertex_index_panel_2": 129
+            },
+            {
+                "vertex_index_panel_1": 22,
+                "vertex_index_panel_2": 128
+            },
+            {
+                "vertex_index_panel_1": 23,
+                "vertex_index_panel_2": 127
+            },
+            {
+                "vertex_index_panel_1": 24,
+                "vertex_index_panel_2": 126
+            },
+            {
+                "vertex_index_panel_1": 25,
+                "vertex_index_panel_2": 125
+            },
+            {
+                "vertex_index_panel_1": 26,
+                "vertex_index_panel_2": 124
+            },
+            {
+                "vertex_index_panel_1": 27,
+                "vertex_index_panel_2": 123
+            },
+            {
+                "vertex_index_panel_1": 28,
+                "vertex_index_panel_2": 122
+            },
+            {
+                "vertex_index_panel_1": 29,
+                "vertex_index_panel_2": 121
+            },
+            {
+                "vertex_index_panel_1": 30,
+                "vertex_index_panel_2": 120
+            },
+            {
+                "vertex_index_panel_1": 31,
+                "vertex_index_panel_2": 119
+            }
+        ]
+    },
+    {
+        "panel_1": "pant_front_right",
+        "edge_1_index": 2,
+        "panel_2": "pant_back_right",
+        "edge_2_index": 3,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 89,
+                "vertex_index_panel_2": 171
+            },
+            {
+                "vertex_index_panel_1": 90,
+                "vertex_index_panel_2": 170
+            },
+            {
+                "vertex_index_panel_1": 91,
+                "vertex_index_panel_2": 169
+            },
+            {
+                "vertex_index_panel_1": 92,
+                "vertex_index_panel_2": 168
+            },
+            {
+                "vertex_index_panel_1": 93,
+                "vertex_index_panel_2": 167
+            },
+            {
+                "vertex_index_panel_1": 94,
+                "vertex_index_panel_2": 166
+            },
+            {
+                "vertex_index_panel_1": 95,
+                "vertex_index_panel_2": 165
+            },
+            {
+                "vertex_index_panel_1": 96,
+                "vertex_index_panel_2": 164
+            },
+            {
+                "vertex_index_panel_1": 97,
+                "vertex_index_panel_2": 163
+            },
+            {
+                "vertex_index_panel_1": 98,
+                "vertex_index_panel_2": 162
+            },
+            {
+                "vertex_index_panel_1": 99,
+                "vertex_index_panel_2": 161
+            },
+            {
+                "vertex_index_panel_1": 100,
+                "vertex_index_panel_2": 160
+            },
+            {
+                "vertex_index_panel_1": 101,
+                "vertex_index_panel_2": 159
+            },
+            {
+                "vertex_index_panel_1": 102,
+                "vertex_index_panel_2": 158
+            },
+            {
+                "vertex_index_panel_1": 103,
+                "vertex_index_panel_2": 157
+            },
+            {
+                "vertex_index_panel_1": 104,
+                "vertex_index_panel_2": 156
+            },
+            {
+                "vertex_index_panel_1": 105,
+                "vertex_index_panel_2": 155
+            },
+            {
+                "vertex_index_panel_1": 106,
+                "vertex_index_panel_2": 154
+            },
+            {
+                "vertex_index_panel_1": 107,
+                "vertex_index_panel_2": 153
+            },
+            {
+                "vertex_index_panel_1": 108,
+                "vertex_index_panel_2": 152
+            },
+            {
+                "vertex_index_panel_1": 109,
+                "vertex_index_panel_2": 151
+            },
+            {
+                "vertex_index_panel_1": 110,
+                "vertex_index_panel_2": 150
+            },
+            {
+                "vertex_index_panel_1": 111,
+                "vertex_index_panel_2": 149
+            },
+            {
+                "vertex_index_panel_1": 112,
+                "vertex_index_panel_2": 148
+            },
+            {
+                "vertex_index_panel_1": 113,
+                "vertex_index_panel_2": 147
+            },
+            {
+                "vertex_index_panel_1": 114,
+                "vertex_index_panel_2": 146
+            },
+            {
+                "vertex_index_panel_1": 115,
+                "vertex_index_panel_2": 145
+            },
+            {
+                "vertex_index_panel_1": 116,
+                "vertex_index_panel_2": 144
+            },
+            {
+                "vertex_index_panel_1": 117,
+                "vertex_index_panel_2": 143
+            },
+            {
+                "vertex_index_panel_1": 118,
+                "vertex_index_panel_2": 142
+            },
+            {
+                "vertex_index_panel_1": 119,
+                "vertex_index_panel_2": 141
+            }
+        ]
+    },
+    {
+        "panel_1": "top_front",
+        "edge_1_index": 6,
+        "panel_2": "top_back",
+        "edge_2_index": 3,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 173,
+                "vertex_index_panel_2": 134
+            },
+            {
+                "vertex_index_panel_1": 174,
+                "vertex_index_panel_2": 133
+            },
+            {
+                "vertex_index_panel_1": 175,
+                "vertex_index_panel_2": 132
+            },
+            {
+                "vertex_index_panel_1": 176,
+                "vertex_index_panel_2": 131
+            },
+            {
+                "vertex_index_panel_1": 177,
+                "vertex_index_panel_2": 130
+            },
+            {
+                "vertex_index_panel_1": 178,
+                "vertex_index_panel_2": 129
+            },
+            {
+                "vertex_index_panel_1": 179,
+                "vertex_index_panel_2": 128
+            },
+            {
+                "vertex_index_panel_1": 180,
+                "vertex_index_panel_2": 127
+            },
+            {
+                "vertex_index_panel_1": 181,
+                "vertex_index_panel_2": 126
+            },
+            {
+                "vertex_index_panel_1": 182,
+                "vertex_index_panel_2": 125
+            },
+            {
+                "vertex_index_panel_1": 183,
+                "vertex_index_panel_2": 124
+            },
+            {
+                "vertex_index_panel_1": 184,
+                "vertex_index_panel_2": 123
+            },
+            {
+                "vertex_index_panel_1": 185,
+                "vertex_index_panel_2": 122
+            },
+            {
+                "vertex_index_panel_1": 186,
+                "vertex_index_panel_2": 121
+            },
+            {
+                "vertex_index_panel_1": 187,
+                "vertex_index_panel_2": 120
+            },
+            {
+                "vertex_index_panel_1": 188,
+                "vertex_index_panel_2": 119
+            },
+            {
+                "vertex_index_panel_1": 189,
+                "vertex_index_panel_2": 118
+            },
+            {
+                "vertex_index_panel_1": 190,
+                "vertex_index_panel_2": 117
+            },
+            {
+                "vertex_index_panel_1": 191,
+                "vertex_index_panel_2": 116
+            }
+        ]
+    },
+    {
+        "panel_1": "wb_front",
+        "edge_1_index": 1,
+        "panel_2": "pant_front_left",
+        "edge_2_index": 2,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 30,
+                "vertex_index_panel_2": 143
+            },
+            {
+                "vertex_index_panel_1": 31,
+                "vertex_index_panel_2": 142
+            },
+            {
+                "vertex_index_panel_1": 32,
+                "vertex_index_panel_2": 141
+            },
+            {
+                "vertex_index_panel_1": 33,
+                "vertex_index_panel_2": 140
+            },
+            {
+                "vertex_index_panel_1": 34,
+                "vertex_index_panel_2": 139
+            },
+            {
+                "vertex_index_panel_1": 35,
+                "vertex_index_panel_2": 138
+            },
+            {
+                "vertex_index_panel_1": 36,
+                "vertex_index_panel_2": 137
+            },
+            {
+                "vertex_index_panel_1": 37,
+                "vertex_index_panel_2": 136
+            },
+            {
+                "vertex_index_panel_1": 38,
+                "vertex_index_panel_2": 135
+            },
+            {
+                "vertex_index_panel_1": 39,
+                "vertex_index_panel_2": 134
+            },
+            {
+                "vertex_index_panel_1": 40,
+                "vertex_index_panel_2": 133
+            },
+            {
+                "vertex_index_panel_1": 41,
+                "vertex_index_panel_2": 132
+            },
+            {
+                "vertex_index_panel_1": 42,
+                "vertex_index_panel_2": 131
+            },
+            {
+                "vertex_index_panel_1": 43,
+                "vertex_index_panel_2": 130
+            },
+            {
+                "vertex_index_panel_1": 44,
+                "vertex_index_panel_2": 129
+            },
+            {
+                "vertex_index_panel_1": 45,
+                "vertex_index_panel_2": 128
+            },
+            {
+                "vertex_index_panel_1": 46,
+                "vertex_index_panel_2": 127
+            },
+            {
+                "vertex_index_panel_1": 47,
+                "vertex_index_panel_2": 126
+            },
+            {
+                "vertex_index_panel_1": 48,
+                "vertex_index_panel_2": 125
+            },
+            {
+                "vertex_index_panel_1": 49,
+                "vertex_index_panel_2": 124
+            },
+            {
+                "vertex_index_panel_1": 50,
+                "vertex_index_panel_2": 123
+            },
+            {
+                "vertex_index_panel_1": 51,
+                "vertex_index_panel_2": 122
+            },
+            {
+                "vertex_index_panel_1": 52,
+                "vertex_index_panel_2": 121
+            },
+            {
+                "vertex_index_panel_1": 53,
+                "vertex_index_panel_2": 120
+            },
+            {
+                "vertex_index_panel_1": 54,
+                "vertex_index_panel_2": 119
+            },
+            {
+                "vertex_index_panel_1": 55,
+                "vertex_index_panel_2": 118
+            },
+            {
+                "vertex_index_panel_1": 56,
+                "vertex_index_panel_2": 117
+            },
+            {
+                "vertex_index_panel_1": 57,
+                "vertex_index_panel_2": 116
+            },
+            {
+                "vertex_index_panel_1": 58,
+                "vertex_index_panel_2": 115
+            },
+            {
+                "vertex_index_panel_1": 59,
+                "vertex_index_panel_2": 114
+            },
+            {
+                "vertex_index_panel_1": 60,
+                "vertex_index_panel_2": 113
+            },
+            {
+                "vertex_index_panel_1": 61,
+                "vertex_index_panel_2": 112
+            },
+            {
+                "vertex_index_panel_1": 62,
+                "vertex_index_panel_2": 111
+            },
+            {
+                "vertex_index_panel_1": 63,
+                "vertex_index_panel_2": 110
+            }
+        ]
+    },
+    {
+        "panel_1": "top_front",
+        "edge_1_index": 1,
+        "panel_2": "top_back",
+        "edge_2_index": 7,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 65,
+                "vertex_index_panel_2": 0
+            },
+            {
+                "vertex_index_panel_1": 66,
+                "vertex_index_panel_2": 216
+            },
+            {
+                "vertex_index_panel_1": 67,
+                "vertex_index_panel_2": 215
+            },
+            {
+                "vertex_index_panel_1": 68,
+                "vertex_index_panel_2": 214
+            },
+            {
+                "vertex_index_panel_1": 69,
+                "vertex_index_panel_2": 213
+            },
+            {
+                "vertex_index_panel_1": 70,
+                "vertex_index_panel_2": 212
+            },
+            {
+                "vertex_index_panel_1": 71,
+                "vertex_index_panel_2": 211
+            },
+            {
+                "vertex_index_panel_1": 72,
+                "vertex_index_panel_2": 210
+            },
+            {
+                "vertex_index_panel_1": 73,
+                "vertex_index_panel_2": 209
+            },
+            {
+                "vertex_index_panel_1": 74,
+                "vertex_index_panel_2": 208
+            },
+            {
+                "vertex_index_panel_1": 75,
+                "vertex_index_panel_2": 207
+            },
+            {
+                "vertex_index_panel_1": 76,
+                "vertex_index_panel_2": 206
+            },
+            {
+                "vertex_index_panel_1": 77,
+                "vertex_index_panel_2": 205
+            },
+            {
+                "vertex_index_panel_1": 78,
+                "vertex_index_panel_2": 204
+            },
+            {
+                "vertex_index_panel_1": 79,
+                "vertex_index_panel_2": 203
+            },
+            {
+                "vertex_index_panel_1": 80,
+                "vertex_index_panel_2": 202
+            },
+            {
+                "vertex_index_panel_1": 81,
+                "vertex_index_panel_2": 201
+            },
+            {
+                "vertex_index_panel_1": 82,
+                "vertex_index_panel_2": 200
+            },
+            {
+                "vertex_index_panel_1": 83,
+                "vertex_index_panel_2": 199
+            },
+            {
+                "vertex_index_panel_1": 84,
+                "vertex_index_panel_2": 198
+            },
+            {
+                "vertex_index_panel_1": 85,
+                "vertex_index_panel_2": 197
+            },
+            {
+                "vertex_index_panel_1": 86,
+                "vertex_index_panel_2": 196
+            },
+            {
+                "vertex_index_panel_1": 87,
+                "vertex_index_panel_2": 195
+            },
+            {
+                "vertex_index_panel_1": 88,
+                "vertex_index_panel_2": 194
+            },
+            {
+                "vertex_index_panel_1": 89,
+                "vertex_index_panel_2": 193
+            },
+            {
+                "vertex_index_panel_1": 90,
+                "vertex_index_panel_2": 192
+            },
+            {
+                "vertex_index_panel_1": 91,
+                "vertex_index_panel_2": 191
+            }
+        ]
+    },
+    {
+        "panel_1": "top_front",
+        "edge_1_index": 8,
+        "panel_2": "top_back",
+        "edge_2_index": 1,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 217,
+                "vertex_index_panel_2": 93
+            },
+            {
+                "vertex_index_panel_1": 218,
+                "vertex_index_panel_2": 92
+            },
+            {
+                "vertex_index_panel_1": 219,
+                "vertex_index_panel_2": 91
+            },
+            {
+                "vertex_index_panel_1": 220,
+                "vertex_index_panel_2": 90
+            },
+            {
+                "vertex_index_panel_1": 221,
+                "vertex_index_panel_2": 89
+            },
+            {
+                "vertex_index_panel_1": 222,
+                "vertex_index_panel_2": 88
+            },
+            {
+                "vertex_index_panel_1": 223,
+                "vertex_index_panel_2": 87
+            },
+            {
+                "vertex_index_panel_1": 224,
+                "vertex_index_panel_2": 86
+            },
+            {
+                "vertex_index_panel_1": 225,
+                "vertex_index_panel_2": 85
+            },
+            {
+                "vertex_index_panel_1": 226,
+                "vertex_index_panel_2": 84
+            },
+            {
+                "vertex_index_panel_1": 227,
+                "vertex_index_panel_2": 83
+            },
+            {
+                "vertex_index_panel_1": 228,
+                "vertex_index_panel_2": 82
+            },
+            {
+                "vertex_index_panel_1": 229,
+                "vertex_index_panel_2": 81
+            },
+            {
+                "vertex_index_panel_1": 230,
+                "vertex_index_panel_2": 80
+            },
+            {
+                "vertex_index_panel_1": 231,
+                "vertex_index_panel_2": 79
+            },
+            {
+                "vertex_index_panel_1": 232,
+                "vertex_index_panel_2": 78
+            },
+            {
+                "vertex_index_panel_1": 233,
+                "vertex_index_panel_2": 77
+            },
+            {
+                "vertex_index_panel_1": 234,
+                "vertex_index_panel_2": 76
+            },
+            {
+                "vertex_index_panel_1": 235,
+                "vertex_index_panel_2": 75
+            },
+            {
+                "vertex_index_panel_1": 236,
+                "vertex_index_panel_2": 74
+            },
+            {
+                "vertex_index_panel_1": 237,
+                "vertex_index_panel_2": 73
+            },
+            {
+                "vertex_index_panel_1": 238,
+                "vertex_index_panel_2": 72
+            },
+            {
+                "vertex_index_panel_1": 239,
+                "vertex_index_panel_2": 71
+            },
+            {
+                "vertex_index_panel_1": 240,
+                "vertex_index_panel_2": 70
+            },
+            {
+                "vertex_index_panel_1": 241,
+                "vertex_index_panel_2": 69
+            },
+            {
+                "vertex_index_panel_1": 242,
+                "vertex_index_panel_2": 68
+            },
+            {
+                "vertex_index_panel_1": 0,
+                "vertex_index_panel_2": 67
+            }
+        ]
+    },
+    {
+        "panel_1": "pant_back_left",
+        "edge_1_index": 1,
+        "panel_2": "pant_back_right",
+        "edge_2_index": 4,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 36,
+                "vertex_index_panel_2": 0
+            },
+            {
+                "vertex_index_panel_1": 37,
+                "vertex_index_panel_2": 219
+            },
+            {
+                "vertex_index_panel_1": 38,
+                "vertex_index_panel_2": 218
+            },
+            {
+                "vertex_index_panel_1": 39,
+                "vertex_index_panel_2": 217
+            },
+            {
+                "vertex_index_panel_1": 40,
+                "vertex_index_panel_2": 216
+            },
+            {
+                "vertex_index_panel_1": 41,
+                "vertex_index_panel_2": 215
+            },
+            {
+                "vertex_index_panel_1": 42,
+                "vertex_index_panel_2": 214
+            },
+            {
+                "vertex_index_panel_1": 43,
+                "vertex_index_panel_2": 213
+            },
+            {
+                "vertex_index_panel_1": 44,
+                "vertex_index_panel_2": 212
+            },
+            {
+                "vertex_index_panel_1": 45,
+                "vertex_index_panel_2": 211
+            },
+            {
+                "vertex_index_panel_1": 46,
+                "vertex_index_panel_2": 210
+            },
+            {
+                "vertex_index_panel_1": 47,
+                "vertex_index_panel_2": 209
+            },
+            {
+                "vertex_index_panel_1": 48,
+                "vertex_index_panel_2": 208
+            },
+            {
+                "vertex_index_panel_1": 49,
+                "vertex_index_panel_2": 207
+            },
+            {
+                "vertex_index_panel_1": 50,
+                "vertex_index_panel_2": 206
+            },
+            {
+                "vertex_index_panel_1": 51,
+                "vertex_index_panel_2": 205
+            },
+            {
+                "vertex_index_panel_1": 52,
+                "vertex_index_panel_2": 204
+            },
+            {
+                "vertex_index_panel_1": 53,
+                "vertex_index_panel_2": 203
+            },
+            {
+                "vertex_index_panel_1": 54,
+                "vertex_index_panel_2": 202
+            },
+            {
+                "vertex_index_panel_1": 55,
+                "vertex_index_panel_2": 201
+            },
+            {
+                "vertex_index_panel_1": 56,
+                "vertex_index_panel_2": 200
+            },
+            {
+                "vertex_index_panel_1": 57,
+                "vertex_index_panel_2": 199
+            },
+            {
+                "vertex_index_panel_1": 58,
+                "vertex_index_panel_2": 198
+            },
+            {
+                "vertex_index_panel_1": 59,
+                "vertex_index_panel_2": 197
+            },
+            {
+                "vertex_index_panel_1": 60,
+                "vertex_index_panel_2": 196
+            },
+            {
+                "vertex_index_panel_1": 61,
+                "vertex_index_panel_2": 195
+            },
+            {
+                "vertex_index_panel_1": 62,
+                "vertex_index_panel_2": 194
+            },
+            {
+                "vertex_index_panel_1": 63,
+                "vertex_index_panel_2": 193
+            },
+            {
+                "vertex_index_panel_1": 64,
+                "vertex_index_panel_2": 192
+            },
+            {
+                "vertex_index_panel_1": 65,
+                "vertex_index_panel_2": 191
+            },
+            {
+                "vertex_index_panel_1": 66,
+                "vertex_index_panel_2": 190
+            },
+            {
+                "vertex_index_panel_1": 67,
+                "vertex_index_panel_2": 189
+            },
+            {
+                "vertex_index_panel_1": 68,
+                "vertex_index_panel_2": 188
+            },
+            {
+                "vertex_index_panel_1": 69,
+                "vertex_index_panel_2": 187
+            },
+            {
+                "vertex_index_panel_1": 70,
+                "vertex_index_panel_2": 186
+            },
+            {
+                "vertex_index_panel_1": 71,
+                "vertex_index_panel_2": 185
+            },
+            {
+                "vertex_index_panel_1": 72,
+                "vertex_index_panel_2": 184
+            },
+            {
+                "vertex_index_panel_1": 73,
+                "vertex_index_panel_2": 183
+            },
+            {
+                "vertex_index_panel_1": 74,
+                "vertex_index_panel_2": 182
+            },
+            {
+                "vertex_index_panel_1": 75,
+                "vertex_index_panel_2": 181
+            },
+            {
+                "vertex_index_panel_1": 76,
+                "vertex_index_panel_2": 180
+            },
+            {
+                "vertex_index_panel_1": 77,
+                "vertex_index_panel_2": 179
+            },
+            {
+                "vertex_index_panel_1": 78,
+                "vertex_index_panel_2": 178
+            },
+            {
+                "vertex_index_panel_1": 79,
+                "vertex_index_panel_2": 177
+            },
+            {
+                "vertex_index_panel_1": 80,
+                "vertex_index_panel_2": 176
+            },
+            {
+                "vertex_index_panel_1": 81,
+                "vertex_index_panel_2": 175
+            },
+            {
+                "vertex_index_panel_1": 82,
+                "vertex_index_panel_2": 174
+            },
+            {
+                "vertex_index_panel_1": 83,
+                "vertex_index_panel_2": 173
+            },
+            {
+                "vertex_index_panel_1": 84,
+                "vertex_index_panel_2": 172
+            },
+            {
+                "vertex_index_panel_1": 85,
+                "vertex_index_panel_2": 171
+            }
+        ]
+    },
+    {
+        "panel_1": "top_front",
+        "edge_1_index": 3,
+        "panel_2": "top_back",
+        "edge_2_index": 5,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 115,
+                "vertex_index_panel_2": 168
+            },
+            {
+                "vertex_index_panel_1": 116,
+                "vertex_index_panel_2": 167
+            },
+            {
+                "vertex_index_panel_1": 117,
+                "vertex_index_panel_2": 166
+            },
+            {
+                "vertex_index_panel_1": 118,
+                "vertex_index_panel_2": 165
+            },
+            {
+                "vertex_index_panel_1": 119,
+                "vertex_index_panel_2": 164
+            },
+            {
+                "vertex_index_panel_1": 120,
+                "vertex_index_panel_2": 163
+            },
+            {
+                "vertex_index_panel_1": 121,
+                "vertex_index_panel_2": 162
+            },
+            {
+                "vertex_index_panel_1": 122,
+                "vertex_index_panel_2": 161
+            },
+            {
+                "vertex_index_panel_1": 123,
+                "vertex_index_panel_2": 160
+            },
+            {
+                "vertex_index_panel_1": 124,
+                "vertex_index_panel_2": 159
+            },
+            {
+                "vertex_index_panel_1": 125,
+                "vertex_index_panel_2": 158
+            },
+            {
+                "vertex_index_panel_1": 126,
+                "vertex_index_panel_2": 157
+            },
+            {
+                "vertex_index_panel_1": 127,
+                "vertex_index_panel_2": 156
+            },
+            {
+                "vertex_index_panel_1": 128,
+                "vertex_index_panel_2": 155
+            },
+            {
+                "vertex_index_panel_1": 129,
+                "vertex_index_panel_2": 154
+            },
+            {
+                "vertex_index_panel_1": 130,
+                "vertex_index_panel_2": 153
+            },
+            {
+                "vertex_index_panel_1": 131,
+                "vertex_index_panel_2": 152
+            },
+            {
+                "vertex_index_panel_1": 132,
+                "vertex_index_panel_2": 151
+            }
+        ]
+    },
+    {
+        "panel_1": "wb_back",
+        "edge_1_index": 1,
+        "panel_2": "pant_back_right",
+        "edge_2_index": 2,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 31,
+                "vertex_index_panel_2": 141
+            },
+            {
+                "vertex_index_panel_1": 32,
+                "vertex_index_panel_2": 140
+            },
+            {
+                "vertex_index_panel_1": 33,
+                "vertex_index_panel_2": 139
+            },
+            {
+                "vertex_index_panel_1": 34,
+                "vertex_index_panel_2": 138
+            },
+            {
+                "vertex_index_panel_1": 35,
+                "vertex_index_panel_2": 137
+            },
+            {
+                "vertex_index_panel_1": 36,
+                "vertex_index_panel_2": 136
+            },
+            {
+                "vertex_index_panel_1": 37,
+                "vertex_index_panel_2": 135
+            },
+            {
+                "vertex_index_panel_1": 38,
+                "vertex_index_panel_2": 134
+            },
+            {
+                "vertex_index_panel_1": 39,
+                "vertex_index_panel_2": 133
+            },
+            {
+                "vertex_index_panel_1": 40,
+                "vertex_index_panel_2": 132
+            },
+            {
+                "vertex_index_panel_1": 41,
+                "vertex_index_panel_2": 131
+            },
+            {
+                "vertex_index_panel_1": 42,
+                "vertex_index_panel_2": 130
+            },
+            {
+                "vertex_index_panel_1": 43,
+                "vertex_index_panel_2": 129
+            },
+            {
+                "vertex_index_panel_1": 44,
+                "vertex_index_panel_2": 128
+            },
+            {
+                "vertex_index_panel_1": 45,
+                "vertex_index_panel_2": 127
+            },
+            {
+                "vertex_index_panel_1": 46,
+                "vertex_index_panel_2": 126
+            },
+            {
+                "vertex_index_panel_1": 47,
+                "vertex_index_panel_2": 125
+            },
+            {
+                "vertex_index_panel_1": 48,
+                "vertex_index_panel_2": 124
+            },
+            {
+                "vertex_index_panel_1": 49,
+                "vertex_index_panel_2": 123
+            },
+            {
+                "vertex_index_panel_1": 50,
+                "vertex_index_panel_2": 122
+            },
+            {
+                "vertex_index_panel_1": 51,
+                "vertex_index_panel_2": 121
+            },
+            {
+                "vertex_index_panel_1": 52,
+                "vertex_index_panel_2": 120
+            },
+            {
+                "vertex_index_panel_1": 53,
+                "vertex_index_panel_2": 119
+            },
+            {
+                "vertex_index_panel_1": 54,
+                "vertex_index_panel_2": 118
+            },
+            {
+                "vertex_index_panel_1": 55,
+                "vertex_index_panel_2": 117
+            },
+            {
+                "vertex_index_panel_1": 56,
+                "vertex_index_panel_2": 116
+            },
+            {
+                "vertex_index_panel_1": 57,
+                "vertex_index_panel_2": 115
+            },
+            {
+                "vertex_index_panel_1": 58,
+                "vertex_index_panel_2": 114
+            },
+            {
+                "vertex_index_panel_1": 59,
+                "vertex_index_panel_2": 113
+            },
+            {
+                "vertex_index_panel_1": 60,
+                "vertex_index_panel_2": 112
+            },
+            {
+                "vertex_index_panel_1": 61,
+                "vertex_index_panel_2": 111
+            },
+            {
+                "vertex_index_panel_1": 62,
+                "vertex_index_panel_2": 110
+            },
+            {
+                "vertex_index_panel_1": 63,
+                "vertex_index_panel_2": 109
+            }
+        ]
+    },
+    {
+        "panel_1": "pant_back_left",
+        "edge_1_index": 4,
+        "panel_2": "pant_back_right",
+        "edge_2_index": 1,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 146,
+                "vertex_index_panel_2": 109
+            },
+            {
+                "vertex_index_panel_1": 147,
+                "vertex_index_panel_2": 108
+            },
+            {
+                "vertex_index_panel_1": 148,
+                "vertex_index_panel_2": 107
+            },
+            {
+                "vertex_index_panel_1": 149,
+                "vertex_index_panel_2": 106
+            },
+            {
+                "vertex_index_panel_1": 150,
+                "vertex_index_panel_2": 105
+            },
+            {
+                "vertex_index_panel_1": 151,
+                "vertex_index_panel_2": 104
+            },
+            {
+                "vertex_index_panel_1": 152,
+                "vertex_index_panel_2": 103
+            },
+            {
+                "vertex_index_panel_1": 153,
+                "vertex_index_panel_2": 102
+            },
+            {
+                "vertex_index_panel_1": 154,
+                "vertex_index_panel_2": 101
+            },
+            {
+                "vertex_index_panel_1": 155,
+                "vertex_index_panel_2": 100
+            },
+            {
+                "vertex_index_panel_1": 156,
+                "vertex_index_panel_2": 99
+            },
+            {
+                "vertex_index_panel_1": 157,
+                "vertex_index_panel_2": 98
+            },
+            {
+                "vertex_index_panel_1": 158,
+                "vertex_index_panel_2": 97
+            },
+            {
+                "vertex_index_panel_1": 159,
+                "vertex_index_panel_2": 96
+            },
+            {
+                "vertex_index_panel_1": 160,
+                "vertex_index_panel_2": 95
+            },
+            {
+                "vertex_index_panel_1": 161,
+                "vertex_index_panel_2": 94
+            },
+            {
+                "vertex_index_panel_1": 162,
+                "vertex_index_panel_2": 93
+            },
+            {
+                "vertex_index_panel_1": 163,
+                "vertex_index_panel_2": 92
+            },
+            {
+                "vertex_index_panel_1": 164,
+                "vertex_index_panel_2": 91
+            },
+            {
+                "vertex_index_panel_1": 165,
+                "vertex_index_panel_2": 90
+            },
+            {
+                "vertex_index_panel_1": 166,
+                "vertex_index_panel_2": 89
+            },
+            {
+                "vertex_index_panel_1": 167,
+                "vertex_index_panel_2": 88
+            },
+            {
+                "vertex_index_panel_1": 168,
+                "vertex_index_panel_2": 87
+            },
+            {
+                "vertex_index_panel_1": 169,
+                "vertex_index_panel_2": 86
+            },
+            {
+                "vertex_index_panel_1": 170,
+                "vertex_index_panel_2": 85
+            },
+            {
+                "vertex_index_panel_1": 171,
+                "vertex_index_panel_2": 84
+            },
+            {
+                "vertex_index_panel_1": 172,
+                "vertex_index_panel_2": 83
+            },
+            {
+                "vertex_index_panel_1": 173,
+                "vertex_index_panel_2": 82
+            },
+            {
+                "vertex_index_panel_1": 174,
+                "vertex_index_panel_2": 81
+            },
+            {
+                "vertex_index_panel_1": 175,
+                "vertex_index_panel_2": 80
+            },
+            {
+                "vertex_index_panel_1": 176,
+                "vertex_index_panel_2": 79
+            },
+            {
+                "vertex_index_panel_1": 177,
+                "vertex_index_panel_2": 78
+            },
+            {
+                "vertex_index_panel_1": 178,
+                "vertex_index_panel_2": 77
+            },
+            {
+                "vertex_index_panel_1": 179,
+                "vertex_index_panel_2": 76
+            },
+            {
+                "vertex_index_panel_1": 180,
+                "vertex_index_panel_2": 75
+            },
+            {
+                "vertex_index_panel_1": 181,
+                "vertex_index_panel_2": 74
+            },
+            {
+                "vertex_index_panel_1": 182,
+                "vertex_index_panel_2": 73
+            },
+            {
+                "vertex_index_panel_1": 183,
+                "vertex_index_panel_2": 72
+            },
+            {
+                "vertex_index_panel_1": 184,
+                "vertex_index_panel_2": 71
+            },
+            {
+                "vertex_index_panel_1": 185,
+                "vertex_index_panel_2": 70
+            },
+            {
+                "vertex_index_panel_1": 186,
+                "vertex_index_panel_2": 69
+            },
+            {
+                "vertex_index_panel_1": 187,
+                "vertex_index_panel_2": 68
+            },
+            {
+                "vertex_index_panel_1": 188,
+                "vertex_index_panel_2": 67
+            },
+            {
+                "vertex_index_panel_1": 189,
+                "vertex_index_panel_2": 66
+            },
+            {
+                "vertex_index_panel_1": 190,
+                "vertex_index_panel_2": 65
+            },
+            {
+                "vertex_index_panel_1": 191,
+                "vertex_index_panel_2": 64
+            },
+            {
+                "vertex_index_panel_1": 192,
+                "vertex_index_panel_2": 63
+            },
+            {
+                "vertex_index_panel_1": 193,
+                "vertex_index_panel_2": 62
+            },
+            {
+                "vertex_index_panel_1": 194,
+                "vertex_index_panel_2": 61
+            },
+            {
+                "vertex_index_panel_1": 195,
+                "vertex_index_panel_2": 60
+            },
+            {
+                "vertex_index_panel_1": 196,
+                "vertex_index_panel_2": 59
+            },
+            {
+                "vertex_index_panel_1": 197,
+                "vertex_index_panel_2": 58
+            },
+            {
+                "vertex_index_panel_1": 198,
+                "vertex_index_panel_2": 57
+            },
+            {
+                "vertex_index_panel_1": 199,
+                "vertex_index_panel_2": 56
+            },
+            {
+                "vertex_index_panel_1": 200,
+                "vertex_index_panel_2": 55
+            },
+            {
+                "vertex_index_panel_1": 201,
+                "vertex_index_panel_2": 54
+            },
+            {
+                "vertex_index_panel_1": 202,
+                "vertex_index_panel_2": 53
+            },
+            {
+                "vertex_index_panel_1": 203,
+                "vertex_index_panel_2": 52
+            },
+            {
+                "vertex_index_panel_1": 204,
+                "vertex_index_panel_2": 51
+            },
+            {
+                "vertex_index_panel_1": 205,
+                "vertex_index_panel_2": 50
+            },
+            {
+                "vertex_index_panel_1": 206,
+                "vertex_index_panel_2": 49
+            },
+            {
+                "vertex_index_panel_1": 207,
+                "vertex_index_panel_2": 48
+            },
+            {
+                "vertex_index_panel_1": 208,
+                "vertex_index_panel_2": 47
+            },
+            {
+                "vertex_index_panel_1": 209,
+                "vertex_index_panel_2": 46
+            },
+            {
+                "vertex_index_panel_1": 210,
+                "vertex_index_panel_2": 45
+            },
+            {
+                "vertex_index_panel_1": 211,
+                "vertex_index_panel_2": 44
+            },
+            {
+                "vertex_index_panel_1": 212,
+                "vertex_index_panel_2": 43
+            },
+            {
+                "vertex_index_panel_1": 213,
+                "vertex_index_panel_2": 42
+            },
+            {
+                "vertex_index_panel_1": 214,
+                "vertex_index_panel_2": 41
+            },
+            {
+                "vertex_index_panel_1": 215,
+                "vertex_index_panel_2": 40
+            },
+            {
+                "vertex_index_panel_1": 216,
+                "vertex_index_panel_2": 39
+            },
+            {
+                "vertex_index_panel_1": 0,
+                "vertex_index_panel_2": 38
+            }
+        ]
+    },
+    {
+        "panel_1": "pant_front_left",
+        "edge_1_index": 4,
+        "panel_2": "pant_front_right",
+        "edge_2_index": 1,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 174,
+                "vertex_index_panel_2": 89
+            },
+            {
+                "vertex_index_panel_1": 175,
+                "vertex_index_panel_2": 88
+            },
+            {
+                "vertex_index_panel_1": 176,
+                "vertex_index_panel_2": 87
+            },
+            {
+                "vertex_index_panel_1": 177,
+                "vertex_index_panel_2": 86
+            },
+            {
+                "vertex_index_panel_1": 178,
+                "vertex_index_panel_2": 85
+            },
+            {
+                "vertex_index_panel_1": 179,
+                "vertex_index_panel_2": 84
+            },
+            {
+                "vertex_index_panel_1": 180,
+                "vertex_index_panel_2": 83
+            },
+            {
+                "vertex_index_panel_1": 181,
+                "vertex_index_panel_2": 82
+            },
+            {
+                "vertex_index_panel_1": 182,
+                "vertex_index_panel_2": 81
+            },
+            {
+                "vertex_index_panel_1": 183,
+                "vertex_index_panel_2": 80
+            },
+            {
+                "vertex_index_panel_1": 184,
+                "vertex_index_panel_2": 79
+            },
+            {
+                "vertex_index_panel_1": 185,
+                "vertex_index_panel_2": 78
+            },
+            {
+                "vertex_index_panel_1": 186,
+                "vertex_index_panel_2": 77
+            },
+            {
+                "vertex_index_panel_1": 187,
+                "vertex_index_panel_2": 76
+            },
+            {
+                "vertex_index_panel_1": 188,
+                "vertex_index_panel_2": 75
+            },
+            {
+                "vertex_index_panel_1": 189,
+                "vertex_index_panel_2": 74
+            },
+            {
+                "vertex_index_panel_1": 190,
+                "vertex_index_panel_2": 73
+            },
+            {
+                "vertex_index_panel_1": 191,
+                "vertex_index_panel_2": 72
+            },
+            {
+                "vertex_index_panel_1": 192,
+                "vertex_index_panel_2": 71
+            },
+            {
+                "vertex_index_panel_1": 193,
+                "vertex_index_panel_2": 70
+            },
+            {
+                "vertex_index_panel_1": 194,
+                "vertex_index_panel_2": 69
+            },
+            {
+                "vertex_index_panel_1": 195,
+                "vertex_index_panel_2": 68
+            },
+            {
+                "vertex_index_panel_1": 196,
+                "vertex_index_panel_2": 67
+            },
+            {
+                "vertex_index_panel_1": 197,
+                "vertex_index_panel_2": 66
+            },
+            {
+                "vertex_index_panel_1": 198,
+                "vertex_index_panel_2": 65
+            },
+            {
+                "vertex_index_panel_1": 199,
+                "vertex_index_panel_2": 64
+            },
+            {
+                "vertex_index_panel_1": 200,
+                "vertex_index_panel_2": 63
+            },
+            {
+                "vertex_index_panel_1": 201,
+                "vertex_index_panel_2": 62
+            },
+            {
+                "vertex_index_panel_1": 202,
+                "vertex_index_panel_2": 61
+            },
+            {
+                "vertex_index_panel_1": 203,
+                "vertex_index_panel_2": 60
+            },
+            {
+                "vertex_index_panel_1": 204,
+                "vertex_index_panel_2": 59
+            },
+            {
+                "vertex_index_panel_1": 205,
+                "vertex_index_panel_2": 58
+            },
+            {
+                "vertex_index_panel_1": 206,
+                "vertex_index_panel_2": 57
+            },
+            {
+                "vertex_index_panel_1": 207,
+                "vertex_index_panel_2": 56
+            },
+            {
+                "vertex_index_panel_1": 208,
+                "vertex_index_panel_2": 55
+            },
+            {
+                "vertex_index_panel_1": 209,
+                "vertex_index_panel_2": 54
+            },
+            {
+                "vertex_index_panel_1": 210,
+                "vertex_index_panel_2": 53
+            },
+            {
+                "vertex_index_panel_1": 211,
+                "vertex_index_panel_2": 52
+            },
+            {
+                "vertex_index_panel_1": 212,
+                "vertex_index_panel_2": 51
+            },
+            {
+                "vertex_index_panel_1": 213,
+                "vertex_index_panel_2": 50
+            },
+            {
+                "vertex_index_panel_1": 214,
+                "vertex_index_panel_2": 49
+            },
+            {
+                "vertex_index_panel_1": 215,
+                "vertex_index_panel_2": 48
+            },
+            {
+                "vertex_index_panel_1": 216,
+                "vertex_index_panel_2": 47
+            },
+            {
+                "vertex_index_panel_1": 217,
+                "vertex_index_panel_2": 46
+            },
+            {
+                "vertex_index_panel_1": 218,
+                "vertex_index_panel_2": 45
+            },
+            {
+                "vertex_index_panel_1": 219,
+                "vertex_index_panel_2": 44
+            },
+            {
+                "vertex_index_panel_1": 220,
+                "vertex_index_panel_2": 43
+            },
+            {
+                "vertex_index_panel_1": 221,
+                "vertex_index_panel_2": 42
+            },
+            {
+                "vertex_index_panel_1": 222,
+                "vertex_index_panel_2": 41
+            },
+            {
+                "vertex_index_panel_1": 223,
+                "vertex_index_panel_2": 40
+            },
+            {
+                "vertex_index_panel_1": 0,
+                "vertex_index_panel_2": 39
+            }
+        ]
+    },
+    {
+        "panel_1": "wb_front",
+        "edge_1_index": 2,
+        "panel_2": "wb_back",
+        "edge_2_index": 4,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 63,
+                "vertex_index_panel_2": 0
+            },
+            {
+                "vertex_index_panel_1": 64,
+                "vertex_index_panel_2": 85
+            },
+            {
+                "vertex_index_panel_1": 65,
+                "vertex_index_panel_2": 84
+            },
+            {
+                "vertex_index_panel_1": 66,
+                "vertex_index_panel_2": 83
+            }
+        ]
+    },
+    {
+        "panel_1": "pant_front_left",
+        "edge_1_index": 3,
+        "panel_2": "pant_back_left",
+        "edge_2_index": 2,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 143,
+                "vertex_index_panel_2": 116
+            },
+            {
+                "vertex_index_panel_1": 144,
+                "vertex_index_panel_2": 115
+            },
+            {
+                "vertex_index_panel_1": 145,
+                "vertex_index_panel_2": 114
+            },
+            {
+                "vertex_index_panel_1": 146,
+                "vertex_index_panel_2": 113
+            },
+            {
+                "vertex_index_panel_1": 147,
+                "vertex_index_panel_2": 112
+            },
+            {
+                "vertex_index_panel_1": 148,
+                "vertex_index_panel_2": 111
+            },
+            {
+                "vertex_index_panel_1": 149,
+                "vertex_index_panel_2": 110
+            },
+            {
+                "vertex_index_panel_1": 150,
+                "vertex_index_panel_2": 109
+            },
+            {
+                "vertex_index_panel_1": 151,
+                "vertex_index_panel_2": 108
+            },
+            {
+                "vertex_index_panel_1": 152,
+                "vertex_index_panel_2": 107
+            },
+            {
+                "vertex_index_panel_1": 153,
+                "vertex_index_panel_2": 106
+            },
+            {
+                "vertex_index_panel_1": 154,
+                "vertex_index_panel_2": 105
+            },
+            {
+                "vertex_index_panel_1": 155,
+                "vertex_index_panel_2": 104
+            },
+            {
+                "vertex_index_panel_1": 156,
+                "vertex_index_panel_2": 103
+            },
+            {
+                "vertex_index_panel_1": 157,
+                "vertex_index_panel_2": 102
+            },
+            {
+                "vertex_index_panel_1": 158,
+                "vertex_index_panel_2": 101
+            },
+            {
+                "vertex_index_panel_1": 159,
+                "vertex_index_panel_2": 100
+            },
+            {
+                "vertex_index_panel_1": 160,
+                "vertex_index_panel_2": 99
+            },
+            {
+                "vertex_index_panel_1": 161,
+                "vertex_index_panel_2": 98
+            },
+            {
+                "vertex_index_panel_1": 162,
+                "vertex_index_panel_2": 97
+            },
+            {
+                "vertex_index_panel_1": 163,
+                "vertex_index_panel_2": 96
+            },
+            {
+                "vertex_index_panel_1": 164,
+                "vertex_index_panel_2": 95
+            },
+            {
+                "vertex_index_panel_1": 165,
+                "vertex_index_panel_2": 94
+            },
+            {
+                "vertex_index_panel_1": 166,
+                "vertex_index_panel_2": 93
+            },
+            {
+                "vertex_index_panel_1": 167,
+                "vertex_index_panel_2": 92
+            },
+            {
+                "vertex_index_panel_1": 168,
+                "vertex_index_panel_2": 91
+            },
+            {
+                "vertex_index_panel_1": 169,
+                "vertex_index_panel_2": 90
+            },
+            {
+                "vertex_index_panel_1": 170,
+                "vertex_index_panel_2": 89
+            },
+            {
+                "vertex_index_panel_1": 171,
+                "vertex_index_panel_2": 88
+            },
+            {
+                "vertex_index_panel_1": 172,
+                "vertex_index_panel_2": 87
+            },
+            {
+                "vertex_index_panel_1": 173,
+                "vertex_index_panel_2": 86
+            },
+            {
+                "vertex_index_panel_1": 174,
+                "vertex_index_panel_2": 85
+            }
+        ]
+    },
+    {
+        "panel_1": "wb_front",
+        "edge_1_index": 0,
+        "panel_2": "pant_back_left",
+        "edge_2_index": 3,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 0,
+                "vertex_index_panel_2": 146
+            },
+            {
+                "vertex_index_panel_1": 1,
+                "vertex_index_panel_2": 145
+            },
+            {
+                "vertex_index_panel_1": 2,
+                "vertex_index_panel_2": 144
+            },
+            {
+                "vertex_index_panel_1": 3,
+                "vertex_index_panel_2": 143
+            },
+            {
+                "vertex_index_panel_1": 4,
+                "vertex_index_panel_2": 142
+            },
+            {
+                "vertex_index_panel_1": 5,
+                "vertex_index_panel_2": 141
+            },
+            {
+                "vertex_index_panel_1": 6,
+                "vertex_index_panel_2": 140
+            },
+            {
+                "vertex_index_panel_1": 7,
+                "vertex_index_panel_2": 139
+            },
+            {
+                "vertex_index_panel_1": 8,
+                "vertex_index_panel_2": 138
+            },
+            {
+                "vertex_index_panel_1": 9,
+                "vertex_index_panel_2": 137
+            },
+            {
+                "vertex_index_panel_1": 10,
+                "vertex_index_panel_2": 136
+            },
+            {
+                "vertex_index_panel_1": 11,
+                "vertex_index_panel_2": 135
+            },
+            {
+                "vertex_index_panel_1": 12,
+                "vertex_index_panel_2": 134
+            },
+            {
+                "vertex_index_panel_1": 13,
+                "vertex_index_panel_2": 133
+            },
+            {
+                "vertex_index_panel_1": 14,
+                "vertex_index_panel_2": 132
+            },
+            {
+                "vertex_index_panel_1": 15,
+                "vertex_index_panel_2": 131
+            },
+            {
+                "vertex_index_panel_1": 16,
+                "vertex_index_panel_2": 130
+            },
+            {
+                "vertex_index_panel_1": 17,
+                "vertex_index_panel_2": 129
+            },
+            {
+                "vertex_index_panel_1": 18,
+                "vertex_index_panel_2": 128
+            },
+            {
+                "vertex_index_panel_1": 19,
+                "vertex_index_panel_2": 127
+            },
+            {
+                "vertex_index_panel_1": 20,
+                "vertex_index_panel_2": 126
+            },
+            {
+                "vertex_index_panel_1": 21,
+                "vertex_index_panel_2": 125
+            },
+            {
+                "vertex_index_panel_1": 22,
+                "vertex_index_panel_2": 124
+            },
+            {
+                "vertex_index_panel_1": 23,
+                "vertex_index_panel_2": 123
+            },
+            {
+                "vertex_index_panel_1": 24,
+                "vertex_index_panel_2": 122
+            },
+            {
+                "vertex_index_panel_1": 25,
+                "vertex_index_panel_2": 121
+            },
+            {
+                "vertex_index_panel_1": 26,
+                "vertex_index_panel_2": 120
+            },
+            {
+                "vertex_index_panel_1": 27,
+                "vertex_index_panel_2": 119
+            },
+            {
+                "vertex_index_panel_1": 28,
+                "vertex_index_panel_2": 118
+            },
+            {
+                "vertex_index_panel_1": 29,
+                "vertex_index_panel_2": 117
+            },
+            {
+                "vertex_index_panel_1": 30,
+                "vertex_index_panel_2": 116
+            }
+        ]
+    },
+    {
+        "panel_1": "pant_front_left",
+        "edge_1_index": 1,
+        "panel_2": "pant_front_right",
+        "edge_2_index": 4,
+        "stitch_pairs_by_index": [
+            {
+                "vertex_index_panel_1": 39,
+                "vertex_index_panel_2": 0
+            },
+            {
+                "vertex_index_panel_1": 40,
+                "vertex_index_panel_2": 220
+            },
+            {
+                "vertex_index_panel_1": 41,
+                "vertex_index_panel_2": 219
+            },
+            {
+                "vertex_index_panel_1": 42,
+                "vertex_index_panel_2": 218
+            },
+            {
+                "vertex_index_panel_1": 43,
+                "vertex_index_panel_2": 217
+            },
+            {
+                "vertex_index_panel_1": 44,
+                "vertex_index_panel_2": 216
+            },
+            {
+                "vertex_index_panel_1": 45,
+                "vertex_index_panel_2": 215
+            },
+            {
+                "vertex_index_panel_1": 46,
+                "vertex_index_panel_2": 214
+            },
+            {
+                "vertex_index_panel_1": 47,
+                "vertex_index_panel_2": 213
+            },
+            {
+                "vertex_index_panel_1": 48,
+                "vertex_index_panel_2": 212
+            },
+            {
+                "vertex_index_panel_1": 49,
+                "vertex_index_panel_2": 211
+            },
+            {
+                "vertex_index_panel_1": 50,
+                "vertex_index_panel_2": 210
+            },
+            {
+                "vertex_index_panel_1": 51,
+                "vertex_index_panel_2": 209
+            },
+            {
+                "vertex_index_panel_1": 52,
+                "vertex_index_panel_2": 208
+            },
+            {
+                "vertex_index_panel_1": 53,
+                "vertex_index_panel_2": 207
+            },
+            {
+                "vertex_index_panel_1": 54,
+                "vertex_index_panel_2": 206
+            },
+            {
+                "vertex_index_panel_1": 55,
+                "vertex_index_panel_2": 205
+            },
+            {
+                "vertex_index_panel_1": 56,
+                "vertex_index_panel_2": 204
+            },
+            {
+                "vertex_index_panel_1": 57,
+                "vertex_index_panel_2": 203
+            },
+            {
+                "vertex_index_panel_1": 58,
+                "vertex_index_panel_2": 202
+            },
+            {
+                "vertex_index_panel_1": 59,
+                "vertex_index_panel_2": 201
+            },
+            {
+                "vertex_index_panel_1": 60,
+                "vertex_index_panel_2": 200
+            },
+            {
+                "vertex_index_panel_1": 61,
+                "vertex_index_panel_2": 199
+            },
+            {
+                "vertex_index_panel_1": 62,
+                "vertex_index_panel_2": 198
+            },
+            {
+                "vertex_index_panel_1": 63,
+                "vertex_index_panel_2": 197
+            },
+            {
+                "vertex_index_panel_1": 64,
+                "vertex_index_panel_2": 196
+            },
+            {
+                "vertex_index_panel_1": 65,
+                "vertex_index_panel_2": 195
+            },
+            {
+                "vertex_index_panel_1": 66,
+                "vertex_index_panel_2": 194
+            },
+            {
+                "vertex_index_panel_1": 67,
+                "vertex_index_panel_2": 193
+            },
+            {
+                "vertex_index_panel_1": 68,
+                "vertex_index_panel_2": 192
+            },
+            {
+                "vertex_index_panel_1": 69,
+                "vertex_index_panel_2": 191
+            },
+            {
+                "vertex_index_panel_1": 70,
+                "vertex_index_panel_2": 190
+            },
+            {
+                "vertex_index_panel_1": 71,
+                "vertex_index_panel_2": 189
+            },
+            {
+                "vertex_index_panel_1": 72,
+                "vertex_index_panel_2": 188
+            },
+            {
+                "vertex_index_panel_1": 73,
+                "vertex_index_panel_2": 187
+            },
+            {
+                "vertex_index_panel_1": 74,
+                "vertex_index_panel_2": 186
+            },
+            {
+                "vertex_index_panel_1": 75,
+                "vertex_index_panel_2": 185
+            },
+            {
+                "vertex_index_panel_1": 76,
+                "vertex_index_panel_2": 184
+            },
+            {
+                "vertex_index_panel_1": 77,
+                "vertex_index_panel_2": 183
+            },
+            {
+                "vertex_index_panel_1": 78,
+                "vertex_index_panel_2": 182
+            },
+            {
+                "vertex_index_panel_1": 79,
+                "vertex_index_panel_2": 181
+            },
+            {
+                "vertex_index_panel_1": 80,
+                "vertex_index_panel_2": 180
+            },
+            {
+                "vertex_index_panel_1": 81,
+                "vertex_index_panel_2": 179
+            },
+            {
+                "vertex_index_panel_1": 82,
+                "vertex_index_panel_2": 178
+            },
+            {
+                "vertex_index_panel_1": 83,
+                "vertex_index_panel_2": 177
+            },
+            {
+                "vertex_index_panel_1": 84,
+                "vertex_index_panel_2": 176
+            },
+            {
+                "vertex_index_panel_1": 85,
+                "vertex_index_panel_2": 175
+            },
+            {
+                "vertex_index_panel_1": 86,
+                "vertex_index_panel_2": 174
+            },
+            {
+                "vertex_index_panel_1": 87,
+                "vertex_index_panel_2": 173
+            },
+            {
+                "vertex_index_panel_1": 88,
+                "vertex_index_panel_2": 172
+            },
+            {
+                "vertex_index_panel_1": 89,
+                "vertex_index_panel_2": 171
+            },
+            {
+                "vertex_index_panel_1": 90,
+                "vertex_index_panel_2": 170
+            },
+            {
+                "vertex_index_panel_1": 91,
+                "vertex_index_panel_2": 169
+            },
+            {
+                "vertex_index_panel_1": 92,
+                "vertex_index_panel_2": 168
+            },
+            {
+                "vertex_index_panel_1": 93,
+                "vertex_index_panel_2": 167
+            },
+            {
+                "vertex_index_panel_1": 94,
+                "vertex_index_panel_2": 166
+            },
+            {
+                "vertex_index_panel_1": 95,
+                "vertex_index_panel_2": 165
+            },
+            {
+                "vertex_index_panel_1": 96,
+                "vertex_index_panel_2": 164
+            },
+            {
+                "vertex_index_panel_1": 97,
+                "vertex_index_panel_2": 163
+            },
+            {
+                "vertex_index_panel_1": 98,
+                "vertex_index_panel_2": 162
+            },
+            {
+                "vertex_index_panel_1": 99,
+                "vertex_index_panel_2": 161
+            },
+            {
+                "vertex_index_panel_1": 100,
+                "vertex_index_panel_2": 160
+            },
+            {
+                "vertex_index_panel_1": 101,
+                "vertex_index_panel_2": 159
+            },
+            {
+                "vertex_index_panel_1": 102,
+                "vertex_index_panel_2": 158
+            },
+            {
+                "vertex_index_panel_1": 103,
+                "vertex_index_panel_2": 157
+            },
+            {
+                "vertex_index_panel_1": 104,
+                "vertex_index_panel_2": 156
+            },
+            {
+                "vertex_index_panel_1": 105,
+                "vertex_index_panel_2": 155
+            },
+            {
+                "vertex_index_panel_1": 106,
+                "vertex_index_panel_2": 154
+            },
+            {
+                "vertex_index_panel_1": 107,
+                "vertex_index_panel_2": 153
+            },
+            {
+                "vertex_index_panel_1": 108,
+                "vertex_index_panel_2": 152
+            },
+            {
+                "vertex_index_panel_1": 109,
+                "vertex_index_panel_2": 151
+            },
+            {
+                "vertex_index_panel_1": 110,
+                "vertex_index_panel_2": 150
+            }
+        ]
+    }
+]

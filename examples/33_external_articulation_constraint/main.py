@@ -29,10 +29,10 @@ world = World(engine)
 dt = 0.01
 config = Scene.default_config()
 config["gravity"] = [[0.0], [-9.8], [0.0]]
-config["contact"]["enable"] = True
+config["contact"]["enable"] = False
 
-config["newton"]["velocity_tol"] = 0.1  # every low accuracy for interaction purpose
-config["newton"]["transrate_tol"] = 10
+config["newton"]["velocity_tol"] = 0.05  # every low accuracy for interaction purpose
+config["newton"]["transrate_tol"] = 0.1
 config["linear_system"]["tol_rate"] = 1e-4
 config["contact"]["d_hat"] = 0.001
 config["collision_detection"]["method"] = "stackless_bvh"
@@ -179,29 +179,29 @@ def update_articulation(info: Animation.UpdateInfo):
 
 scene.animator().insert(articulation_object, update_articulation)
 
-# Create cloth object
-cloth = scene.objects().create("cloth")
-t_cloth = Transform.Identity()
-t_cloth.scale(2.0)
-io_cloth = SimplicialComplexIO(t_cloth)
-cloth_mesh = io_cloth.read(f"{trimesh_path}/grid20x20.obj")
-label_surface(cloth_mesh)
+# # Create cloth object
+# cloth = scene.objects().create("cloth")
+# t_cloth = Transform.Identity()
+# t_cloth.scale(2.0)
+# io_cloth = SimplicialComplexIO(t_cloth)
+# cloth_mesh = io_cloth.read(f"{trimesh_path}/grid20x20.obj")
+# label_surface(cloth_mesh)
 
-# Apply cloth constitutions
-nks = NeoHookeanShell()
-dsb = DiscreteShellBending()
-moduli = ElasticModuli2D.youngs_poisson(500 * kPa, 0.49)
-nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
-dsb.apply_to(cloth_mesh, bending_stiffness=1.0)
+# # Apply cloth constitutions
+# nks = NeoHookeanShell()
+# dsb = DiscreteShellBending()
+# moduli = ElasticModuli2D.youngs_poisson(500 * kPa, 0.49)
+# nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
+# dsb.apply_to(cloth_mesh, bending_stiffness=1.0)
 
-# Position cloth above the articulated system
-cloth_pos_view = view(cloth_mesh.positions())
-cloth_pos_view[:, 1] += 1.0  # Move cloth up
+# # Position cloth above the articulated system
+# cloth_pos_view = view(cloth_mesh.positions())
+# cloth_pos_view[:, 1] += 1.0  # Move cloth up
 
-# Apply contact element
-default_element.apply_to(cloth_mesh)
+# # Apply contact element
+# default_element.apply_to(cloth_mesh)
 
-cloth.geometries().create(cloth_mesh)
+# cloth.geometries().create(cloth_mesh)
 
 
 world.init(scene)

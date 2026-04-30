@@ -1,7 +1,6 @@
 import numpy as np
 import polyscope as ps
 from polyscope import imgui
-import keyboard
 from uipc import view
 from uipc import Engine, World, Scene, Animation
 from uipc import Vector3, Vector2, Transform, Logger, Quaternion, AngleAxis
@@ -16,11 +15,17 @@ from asset_dir import AssetDir
 ps.init()
 Logger.set_level(Logger.Level.Warn)
 
+_KEY_MAP = {
+    "w": imgui.ImGuiKey_W, "s": imgui.ImGuiKey_S, "d": imgui.ImGuiKey_D,
+    "a": imgui.ImGuiKey_A, "e": imgui.ImGuiKey_E, "q": imgui.ImGuiKey_Q,
+}
+
 class IO:
     @staticmethod
     def is_key_down(key_str:str):
-        return keyboard.is_pressed(key_str.lower())
-    
+        key = _KEY_MAP.get(key_str.lower())
+        return imgui.IsKeyDown(key) if key is not None else False
+
     @staticmethod
     def movement():
         w = 1.0 if IO.is_key_down("W") else 0.0

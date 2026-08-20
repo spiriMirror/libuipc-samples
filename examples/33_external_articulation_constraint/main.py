@@ -192,7 +192,7 @@ nks = NeoHookeanShell()
 dsb = DiscreteShellBending()
 moduli = ElasticModuli2D.youngs_poisson(500 * kPa, 0.49)
 nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
-dsb.apply_to(cloth_mesh, bending_stiffness=1.0)
+dsb.apply_to(cloth_mesh, bending_stiffness=0.001)  # area measure: kappa*t(0.001)
 
 # Position cloth above the articulated system
 cloth_pos_view = view(cloth_mesh.positions())

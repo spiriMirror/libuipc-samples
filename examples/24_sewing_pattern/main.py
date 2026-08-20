@@ -63,8 +63,8 @@ label_surface(t_shirt_back)
 snh.apply_to(t_shirt_front, moduli=moduli, thickness=0.0002, mass_density=100.0)
 snh.apply_to(t_shirt_back, moduli=moduli, thickness=0.0002, mass_density=100.0)
 
-dsb.apply_to(t_shirt_front, bending_stiffness=10)
-dsb.apply_to(t_shirt_back, bending_stiffness=10)
+dsb.apply_to(t_shirt_front, bending_stiffness=0.002)  # area measure: kappa*t(0.0002)
+dsb.apply_to(t_shirt_back, bending_stiffness=0.002)  # area measure: kappa*t(0.0002)
 t_shirt_front_elem.apply_to(t_shirt_front)
 t_shirt_back_elem.apply_to(t_shirt_back)
 

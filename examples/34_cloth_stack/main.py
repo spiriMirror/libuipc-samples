@@ -44,7 +44,8 @@ scene.contact_tabular().default_model(0.02, 1e8)
 abd = AffineBodyConstitution()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-cloth_moduli = ElasticModuli2D.youngs_poisson(60 * kPa, 0.49)
+cloth_stretch_moduli = ElasticModuli2D.youngs_poisson(60 * kPa, 0.49)
+cloth_shear_moduli = ElasticModuli2D.youngs_poisson(0.6 * kPa, 0.49)  # shear 100x softer
 
 def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending_stiffness: float):
     pre = Transform.Identity()
@@ -54,7 +55,7 @@ def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending
     io = SimplicialComplexIO(pre)
     cloth_mesh = io.read(mesh_file)
     label_surface(cloth_mesh)
-    slbws.apply_to(cloth_mesh, moduli=cloth_moduli, mass_density=200, thickness=0.001)
+    slbws.apply_to(cloth_mesh, stretch_moduli=cloth_stretch_moduli, shear_moduli=cloth_shear_moduli, mass_density=200, thickness=0.001)
     dsb.apply_to(cloth_mesh, bending_stiffness=bending_stiffness)
     mesh_partition(cloth_mesh)
     cloth_obj = scene.objects().create(name)
@@ -69,7 +70,7 @@ create_cloth(
     scale=0.5,
     pos=(0.5, 0.0, 0.1),
     rotation=AngleAxis(np.pi / 2, Vector3.UnitX()),
-    bending_stiffness=10.0,
+    bending_stiffness=0.01,  # area measure: kappa*t(0.001)
 )
 create_cloth(
     name="cloth_mid",

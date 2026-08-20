@@ -19,9 +19,9 @@ class MyEngine(PyIEngine):
     def do_init(self):
         wv = WorldVisitor(self.world())
         sv = wv.scene()
-        sv.info()
+        print(sv)
         print(sv.contact_tabular().contact_models())
-        print(f"Initializing the world -> {sv.info()}")
+        print(f"Initializing the world -> {sv}")
     
     def do_advance(self):
         self.frame += 1

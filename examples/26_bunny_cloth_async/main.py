@@ -8,7 +8,7 @@ import uipc.builtin as builtin
 from uipc.core import Engine, World, Scene
 from uipc.geometry import tetmesh, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.geometry import SimplicialComplexIO
-from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli
+from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli2D
 from uipc.gui import SceneGUI 
 from uipc.unit import MPa, GPa, kPa 
 from uipc import ResidentThread
@@ -43,7 +43,7 @@ cloth_mesh = io.read(f"{trimesh_path}/grid20x20.obj")
 label_surface(cloth_mesh)
 nks = NeoHookeanShell()
 dsb = DiscreteShellBending()
-moduli = ElasticModuli.youngs_poisson(10 * kPa, 0.499)
+moduli = ElasticModuli2D.youngs_poisson(10 * kPa, 0.499)
 nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
 dsb.apply_to(cloth_mesh, bending_stiffness=10.0)
 view(cloth_mesh.positions())[:] += 1.0

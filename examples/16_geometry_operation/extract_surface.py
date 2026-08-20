@@ -10,7 +10,6 @@ from uipc.geometry import SimplicialComplexIO
 from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli
 from uipc.gui import SceneGUI 
 from uipc.unit import MPa, GPa, kPa 
-from uipc import Future
 import time
 
 from asset_dir import AssetDir

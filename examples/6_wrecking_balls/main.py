@@ -23,7 +23,7 @@ def process_surface(sc: SimplicialComplex):
     return sc
 
 
-Timer.enable_all()
+#Timer.enable_all()
 Logger.set_level(Logger.Level.Info)
 workspace = AssetDir.output_path(__file__)
 folder = AssetDir.folder(__file__)
@@ -33,14 +33,22 @@ world = World(engine)
 
 config = Scene.default_config()
 config["dt"] = 0.01
-config["contact"]["d_hat"] = 0.01
+config["gravity"] = [[0.0], [-9.81], [0.0]]
+# --- Stiff-GIPC set_case3 alignment: scene-diagonal-relative parameters ---
+# gap = relative_dhat * scene_diagonal (Stiff-GIPC stores dHat = rel^2 * diag^2)
+config["contact"]["d_hat_relative"] = 1e-3
+# newton exit: max displacement < velocity_tol_relative * diag * dt
+config["newton"]["velocity_tol_relative"] = 1e-2
+# Stiff-GIPC pcg_solver_threshold = 1e-4
+config["linear_system"]["tol_rate"] = 1e-4
 config["newton"]["transrate_tol"] = 10
-config["newton"]["velocity_tol"] = 1
+config["newton"]["velocity_tol"] = 1e-2
 print(config)
 
 scene = Scene(config)
 abd = AffineBodyConstitution()
-scene.contact_tabular().default_model(0.02, 10 * GPa)
+# Stiff-GIPC: friction_rate = 0.2; kappa ablation: fixed at 1e4 on both sides
+scene.contact_tabular().default_model(0.2, 10000.0)
 default_contact = scene.contact_tabular().default_element()
 
 io = SimplicialComplexIO()
@@ -61,15 +69,6 @@ link = process_surface(link)
 cube_obj = scene.objects().create("cubes")
 ball_obj = scene.objects().create("balls")
 link_obj = scene.objects().create("links")
-
-abd.apply_to(cube, 100 * MPa)
-default_contact.apply_to(cube)
-
-abd.apply_to(ball, 100 * MPa)
-default_contact.apply_to(ball)
-
-abd.apply_to(link, 100 * MPa)
-default_contact.apply_to(link)
 
 
 def build_mesh(desc, obj: uipc.core.Object, mesh: SimplicialComplex):
@@ -99,6 +98,11 @@ def build_mesh(desc, obj: uipc.core.Object, mesh: SimplicialComplex):
         is_fixed = desc["is_dof_fixed"]
 
     this_mesh = mesh.copy()
+    # constitution/contact first: they create the instance attributes
+    # (is_fixed, transforms); per-object density from the scene description
+    # (Stiff-GIPC alignment: cubes 1000, links/ball 7680)
+    abd.apply_to(this_mesh, 100 * MPa, desc.get("density", 1e3))
+    default_contact.apply_to(this_mesh)
     view(this_mesh.transforms())[0] = t.matrix()
     is_fixed_attr = this_mesh.instances().find("is_fixed")
     view(is_fixed_attr)[0] = is_fixed
@@ -134,7 +138,7 @@ def on_update():
     if run:
         world.advance()
         world.retrieve()
-        world.dump()
+        #world.dump()
         Timer.report()
 
     sgui.update()

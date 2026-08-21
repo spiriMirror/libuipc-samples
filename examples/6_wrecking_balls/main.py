@@ -42,13 +42,14 @@ config["newton"]["velocity_tol_relative"] = 1e-2
 # Stiff-GIPC pcg_solver_threshold = 1e-4
 config["linear_system"]["tol_rate"] = 1e-4
 config["newton"]["transrate_tol"] = 10
-config["newton"]["velocity_tol"] = 1e-2
 print(config)
 
 scene = Scene(config)
 abd = AffineBodyConstitution()
-# Stiff-GIPC: friction_rate = 0.2; kappa ablation: fixed at 1e4 on both sides
-scene.contact_tabular().default_model(0.2, 10000.0)
+# Stiff-GIPC: friction_rate = 0.2.
+# kappa note: libuipc scales the barrier by dt^2 in the incremental potential while
+# Stiff-GIPC applies Kappa raw, so libuipc kappa = Stiff Kappa / dt^2 = 1e4 / 1e-4 = 1e8.
+scene.contact_tabular().default_model(0.2, 1e8)
 default_contact = scene.contact_tabular().default_element()
 
 io = SimplicialComplexIO()

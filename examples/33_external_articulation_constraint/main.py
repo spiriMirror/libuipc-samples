@@ -17,8 +17,8 @@ from uipc.geometry import SimplicialComplex, SimplicialComplexIO, affine_body, l
 from uipc.gui import SceneGUI
 from uipc.unit import GPa, MPa, kPa
 
-Timer.enable_all()
-Logger.set_level(Logger.Level.Info)
+#Timer.enable_all()
+Logger.set_level(Logger.Level.Off)
 
 this_output_path = AssetDir.output_path(__file__)
 trimesh_path = AssetDir.trimesh_path()

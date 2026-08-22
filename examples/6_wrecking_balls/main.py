@@ -24,7 +24,7 @@ def process_surface(sc: SimplicialComplex):
 
 
 #Timer.enable_all()
-Logger.set_level(Logger.Level.Info)
+Logger.set_level(Logger.Level.Off)
 workspace = AssetDir.output_path(__file__)
 folder = AssetDir.folder(__file__)
 
@@ -32,7 +32,7 @@ engine = Engine("cuda", workspace)
 world = World(engine)
 
 config = Scene.default_config()
-config["dt"] = 0.01
+config["dt"] = 0.02
 config["gravity"] = [[0.0], [-9.81], [0.0]]
 # --- Stiff-GIPC set_case3 alignment: scene-diagonal-relative parameters ---
 # gap = relative_dhat * scene_diagonal (Stiff-GIPC stores dHat = rel^2 * diag^2)

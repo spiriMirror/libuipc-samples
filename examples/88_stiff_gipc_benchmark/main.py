@@ -1,4 +1,4 @@
-"""Stiff-GIPC set_case2 benchmark ported to libuipc (headless).
+"""Example 88 -- Stiff-GIPC set_case2 benchmark scene, with GUI visualization.
 
 Scene (Stiff-GIPC gl_main.cu set_case2):
   - ABD  bunny: bunny2.msh, scale 0.2, translate (0, +0.5, 0), rho=1000
@@ -18,12 +18,18 @@ Global parameters (Stiff-GIPC Assets/scene/parameterSetting.txt):
   Newton threshold 1e-2*diag*dt, PCG tol_rate=1e-4, friction slip
   1e-2*diag*dt per step; kappa pinned: Stiff raw 1e4 == libuipc 1e8/dt^2.
 
-Run:  python Stiff-GIPC-benchmark.py [n_frames=250]
-Prints per-frame ms and a final summary; writes tracked-body centroids to
-output/Stiff-GIPC-benchmark/traj.csv for cross-project comparison.
+Usage:
+  python main.py                  # GUI: run/stop button, live per-frame ms
+  python main.py --headless [N]   # benchmark: N frames (default 250), no GUI
+
+Both modes write tracked-body centroids (ABD bunny center, FEM bunny
+centroid) to output/examples/88_stiff_gipc_benchmark/traj.csv and print a
+timing summary when the run completes, for cross-project comparison.
+
+Env knobs: WB_TIMER=1 enables Timer reports, WB_LOG=Info sets log level.
 """
-import os, sys, time, json
-import pathlib
+import os, sys, time
+import statistics
 
 import numpy as np
 import uipc
@@ -35,24 +41,24 @@ from uipc.constitution import (AffineBodyConstitution, StableNeoHookean, Elastic
                                DiscreteShellBending)
 from uipc.unit import MPa
 
-# --------------------------------------------------------------------------
-# paths (self-contained: examples/ -> ../assets/sim_data/...)
-# --------------------------------------------------------------------------
-EXAMPLES_DIR = pathlib.Path(os.path.dirname(__file__)).resolve()
-ASSETS = (EXAMPLES_DIR / "../assets/sim_data").resolve()
-OUTPUT = (EXAMPLES_DIR / "../output/Stiff-GIPC-benchmark").resolve()
-os.makedirs(OUTPUT, exist_ok=True)
+from asset_dir import AssetDir
 
-N_FRAMES = int(sys.argv[1]) if len(sys.argv) > 1 else 250
+# --------------------------------------------------------------------------
+# args & logging
+# --------------------------------------------------------------------------
+HEADLESS = "--headless" in sys.argv
+_positional = [a for a in sys.argv[1:] if not a.startswith("--")]
+N_FRAMES = int(_positional[0]) if _positional else 250
 
 Timer.enable_all() if os.environ.get("WB_TIMER", "0") == "1" else None
 Logger.set_level(getattr(Logger.Level, os.environ.get("WB_LOG", "Warn")))
 
-engine = Engine("cuda", str(OUTPUT))
+workspace = AssetDir.output_path(__file__)
+engine = Engine("cuda", workspace)
 world = World(engine)
 
 # --------------------------------------------------------------------------
-# scene config (Stiff-GIPC-aligned)
+# scene config (Stiff-GIPC-aligned; do not retune -- benchmark comparability)
 # --------------------------------------------------------------------------
 config = Scene.default_config()
 config["dt"] = 0.01
@@ -63,7 +69,7 @@ config["contact"]["eps_velocity_relative"] = 1e-2
 config["linear_system"]["tol_rate"] = 1e-4
 config["newton"]["transrate_tol"] = 10
 # Stiff-GIPC semi-implicit early exit (their newton loop: beta=(1-alpha)*beta
-# from iter>=Kmin=6, exit when beta<=1e-2) — absorbs hard pile-up frames
+# from iter>=Kmin=6, exit when beta<=1e-2) -- absorbs hard pile-up frames
 config["newton"]["semi_implicit"]["enable"] = 1
 config["newton"]["semi_implicit"]["beta_tol"] = 1e-2
 config["newton"]["min_iter"] = 6
@@ -103,10 +109,12 @@ def read_tet_transformed(path, offset, scale):
 
 
 io = SimplicialComplexIO()
+tetmesh_path = AssetDir.tetmesh_path()
+trimesh_path = AssetDir.trimesh_path()
 
 # --- ABD bunny (load first, like Stiff-GIPC's ABD-before-FEM rule) ---------
 abd_obj = scene.objects().create("abd_bunny")
-abd_mesh = process_tet(read_tet_transformed(str(ASSETS / "tetmesh/bunny2.msh"),
+abd_mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh",
                                             vec3(0.0, 0.5, 0.0), 0.2))
 abd.apply_to(abd_mesh, 100 * MPa, 1e3)
 default_contact.apply_to(abd_mesh)
@@ -114,7 +122,7 @@ abd_obj.geometries().create(abd_mesh)
 
 # --- FEM bunny -------------------------------------------------------------
 fem_obj = scene.objects().create("fem_bunny")
-fem_mesh = process_tet(read_tet_transformed(str(ASSETS / "tetmesh/bunny2.msh"),
+fem_mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh",
                                             vec3(0.0, -0.65, 0.0), 0.2))
 snh.apply_to(fem_mesh, ElasticModuli.youngs_poisson(1e4, 0.49), 1e3)
 default_contact.apply_to(fem_mesh)
@@ -122,7 +130,7 @@ fem_obj.geometries().create(fem_mesh)
 
 # --- cloth -----------------------------------------------------------------
 cloth_obj = scene.objects().create("cloth")
-cloth_mesh = io.read(str(ASSETS / "trimesh/cloth_high.obj"))
+cloth_mesh = io.read(f"{trimesh_path}/cloth_high.obj")
 label_surface(cloth_mesh)
 cloth_moduli = ElasticModuli2D.youngs_poisson(5e4, 0.49)
 slbws.apply_to(cloth_mesh,
@@ -167,7 +175,10 @@ def fem_world_center():
 
 traj = []
 frame_ms = []
-for i in range(N_FRAMES):
+
+
+def step_frame():
+    """Advance one frame, record timing + centroids. Returns elapsed ms."""
     t0 = time.perf_counter()
     world.advance()
     world.retrieve()
@@ -175,18 +186,72 @@ for i in range(N_FRAMES):
     frame_ms.append(dt_ms)
     c_abd = abd_world_center()
     c_fem = fem_world_center()
-    traj.append([i, *c_abd, *c_fem])
-    print(f"frame {i}: {dt_ms:.1f}ms  abd=({c_abd[0]:.3f},{c_abd[1]:.3f},{c_abd[2]:.3f})"
-          f"  fem=({c_fem[0]:.3f},{c_fem[1]:.3f},{c_fem[2]:.3f})", flush=True)
+    traj.append([world.frame(), *c_abd, *c_fem])
+    return dt_ms
 
-traj = np.asarray(traj)
-np.savetxt(OUTPUT / "traj.csv",
-           traj,
-           delimiter=",",
-           header="frame,abd_cx,abd_cy,abd_cz,fem_cx,fem_cy,fem_cz",
-           comments="")
-import statistics
-print(f"TOTAL frames={N_FRAMES} mean={statistics.mean(frame_ms):.1f}ms "
-      f"median={statistics.median(frame_ms):.1f}ms")
-print(f"traj saved to {OUTPUT / 'traj.csv'}")
-Timer.report()
+
+def report_and_save():
+    np.savetxt(f"{workspace}/traj.csv",
+               np.asarray(traj),
+               delimiter=",",
+               header="frame,abd_cx,abd_cy,abd_cz,fem_cx,fem_cy,fem_cz",
+               comments="")
+    print(f"TOTAL frames={len(frame_ms)} mean={statistics.mean(frame_ms):.1f}ms "
+          f"median={statistics.median(frame_ms):.1f}ms")
+    print(f"traj saved to {workspace}/traj.csv")
+    Timer.report()
+
+
+# --------------------------------------------------------------------------
+# entry: headless benchmark or GUI
+# --------------------------------------------------------------------------
+if HEADLESS:
+    for i in range(N_FRAMES):
+        dt_ms = step_frame()
+        c = traj[-1]
+        print(f"frame {i}: {dt_ms:.1f}ms"
+              f"  abd=({c[1]:.3f},{c[2]:.3f},{c[3]:.3f})"
+              f"  fem=({c[4]:.3f},{c[5]:.3f},{c[6]:.3f})", flush=True)
+    report_and_save()
+else:
+    import polyscope as ps
+    from polyscope import imgui
+    from uipc.gui import SceneGUI
+
+    sgui = SceneGUI(scene)
+    ps.init()
+    tri_surf, _, _ = sgui.register()
+    tri_surf.set_edge_width(1.0)
+    ps.set_ground_plane_height(-1.0)
+    ps.set_ground_plane_height_mode('manual')
+
+    run = False
+    finished = False
+    last_ms = 0.0
+
+
+    def on_update():
+        global run, finished, last_ms
+
+        imgui.Text(f'frame: {world.frame()} / {N_FRAMES}')
+        imgui.Text(f'last frame: {last_ms:.1f} ms')
+        if frame_ms:
+            imgui.Text(f'mean: {statistics.mean(frame_ms):.1f} ms')
+
+        if imgui.Button('stop' if run else 'run'):
+            run = not run
+
+        if world.frame() >= N_FRAMES and not finished:
+            run = False
+            finished = True
+            report_and_save()
+
+        if finished:
+            imgui.Text('Benchmark finished!')
+        elif run:
+            last_ms = step_frame()
+            sgui.update()
+
+
+    ps.set_user_callback(on_update)
+    ps.show()

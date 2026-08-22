@@ -41,6 +41,8 @@ config["contact"]["d_hat_relative"] = 1e-3
 config["newton"]["velocity_tol_relative"] = 1e-2
 # Stiff-GIPC pcg_solver_threshold = 1e-4
 config["linear_system"]["tol_rate"] = 1e-4
+# Stiff-GIPC friction slip threshold: sqrt(fDhat)*dt = 1e-2*diag*dt per step
+config["contact"]["eps_velocity_relative"] = 1e-2
 config["newton"]["transrate_tol"] = 10
 print(config)
 

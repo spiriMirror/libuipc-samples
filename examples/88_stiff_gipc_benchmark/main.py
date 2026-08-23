@@ -1,14 +1,21 @@
-"""Example 88 -- Stiff-GIPC set_case2 benchmark scene, with GUI visualization.
+"""Example 88 -- two FEM bunnies (MAS vs diagonal preconditioner) + cloth.
 
-Scene (Stiff-GIPC gl_main.cu set_case2):
-  - ABD  bunny: bunny2.msh, scale 0.2, translate (0, +0.5, 0), rho=1000
-    (Stiff forces ABD Young's to 1e7; the ABD shape stiffness is the global
-    parms.kappa=1e8, matched here by AffineBodyConstitution(100 MPa))
-  - FEM  bunny: bunny2.msh, scale 0.2, translate (0, -0.65, 0),
+Derived from the Stiff-GIPC set_case2 benchmark: the original ABD bunny is
+replaced by a second FEM bunny, so the scene runs two identical FEM bunnies
+side by side -- one preconditioned by MAS, one by the diagonal fallback.
+This exercises the mixed-partition path: MAS activates scene-wide, the
+unpartitioned bunny (and the cloth) automatically get the internal
+block-Jacobi fallback inside FEMMASPreconditioner.
+
+Scene:
+  - FEM bunny "diag": bunny2.msh, scale 0.2, translate (0, +0.5, 0),
     E=1e4, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization)
+  - FEM bunny "mas":  same mesh/params at (0, -0.65, 0), plus
+    mesh_partition(mesh, 16) -> MAS preconditioner on its vertices
   - cloth: cloth_high.obj (4225 verts, x,z in [-1,1] at y=0), t=1e-3, rho=200,
-    cloth E=5e4, nu=0.49, strain_rate=100; bending matched by value:
-    Stiff bendStiff = E_bend*t^3/(24*(1-nu^2)) = 5.48e-3 with E_bend=1e8
+    stretch E=1e4, shear E=1e3, nu=0.40, strain_rate=100;
+    bending matched by value: Stiff bendStiff = E_bend*t^3/(24*(1-nu^2))
+    = 5.48e-3 with E_bend=1e8
     -> libuipc DiscreteShellBending with E=5e7 gives E*t^3/(12*(1-nu^2)) = 5.48e-3
   - ground: floor y=-1 (Stiff's 4 side "walls" at x=-1/z=-1 are self-canceling
     duplicate half-planes and are omitted)
@@ -22,9 +29,9 @@ Usage:
   python main.py                  # GUI: run/stop button, live per-frame ms
   python main.py --headless [N]   # benchmark: N frames (default 250), no GUI
 
-Both modes write tracked-body centroids (ABD bunny center, FEM bunny
-centroid) to output/examples/88_stiff_gipc_benchmark/traj.csv and print a
-timing summary when the run completes, for cross-project comparison.
+Both modes write the tracked-body centroids (diag bunny, MAS bunny) to
+output/examples/88_stiff_gipc_benchmark/traj.csv and print a timing summary
+when the run completes, for cross-project comparison.
 
 Env knobs: WB_TIMER=1 enables Timer reports, WB_LOG=Info sets log level.
 """
@@ -35,8 +42,9 @@ import numpy as np
 import uipc
 from uipc import Logger, Timer, Transform, Vector3, view
 from uipc.core import Engine, World, Scene
-from uipc.geometry import SimplicialComplexIO, label_surface, label_triangle_orient, flip_inward_triangles, ground
-from uipc.constitution import (AffineBodyConstitution, StableNeoHookean, ElasticModuli,
+from uipc.geometry import (SimplicialComplexIO, label_surface, label_triangle_orient,
+                           flip_inward_triangles, ground, mesh_partition)
+from uipc.constitution import (StableNeoHookean, ElasticModuli,
                                ElasticModuli2D, StrainLimitingBaraffWitkinShell,
                                DiscreteShellBending)
 from uipc.unit import MPa
@@ -75,7 +83,6 @@ config["newton"]["semi_implicit"]["beta_tol"] = 1e-2
 config["newton"]["min_iter"] = 6
 scene = Scene(config)
 
-abd = AffineBodyConstitution()
 snh = StableNeoHookean()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
@@ -112,21 +119,26 @@ io = SimplicialComplexIO()
 tetmesh_path = AssetDir.tetmesh_path()
 trimesh_path = AssetDir.trimesh_path()
 
-# --- ABD bunny (load first, like Stiff-GIPC's ABD-before-FEM rule) ---------
-abd_obj = scene.objects().create("abd_bunny")
-abd_mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh",
-                                            vec3(0.0, 0.5, 0.0), 0.2))
-abd.apply_to(abd_mesh, 100 * MPa, 1e3)
-default_contact.apply_to(abd_mesh)
-abd_obj.geometries().create(abd_mesh)
 
-# --- FEM bunny -------------------------------------------------------------
-fem_obj = scene.objects().create("fem_bunny")
-fem_mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh",
-                                            vec3(0.0, -0.65, 0.0), 0.2))
-snh.apply_to(fem_mesh, ElasticModuli.youngs_poisson(1e4, 0.49), 1e3)
-default_contact.apply_to(fem_mesh)
-fem_obj.geometries().create(fem_mesh)
+def make_fem_bunny(offset, use_mas):
+    mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh", offset, 0.2))
+    snh.apply_to(mesh, ElasticModuli.youngs_poisson(1e4, 0.49), 1e3)
+    if use_mas:
+        # writes the mesh_part vertex attribute -> FEMMASPreconditioner picks
+        # these vertices up; everything unpartitioned gets the diagonal
+        # fallback inside the same global PCG
+        mesh_partition(mesh, 16)
+    default_contact.apply_to(mesh)
+    obj = scene.objects().create("fem_bunny_mas" if use_mas else "fem_bunny_diag")
+    obj.geometries().create(mesh)
+    return obj
+
+
+# --- FEM bunny (diagonal preconditioner), upper -----------------------------
+diag_obj = make_fem_bunny(vec3(0.0, 0.5, 0.0), use_mas=False)
+
+# --- FEM bunny (MAS preconditioner), lower ----------------------------------
+mas_obj = make_fem_bunny(vec3(0.0, -0.65, 0.0), use_mas=True)
 
 # --- cloth -----------------------------------------------------------------
 cloth_obj = scene.objects().create("cloth")
@@ -150,25 +162,14 @@ ground_obj.geometries().create(ground(-1.0))
 world.init(scene)
 
 # --------------------------------------------------------------------------
-# tracked points: ABD bunny center (via its transform), FEM bunny centroid
+# tracked bodies: per-bunny world centroids
 # --------------------------------------------------------------------------
-abd_geo_id = abd_obj.geometries().ids()[0]
-fem_geo_id = fem_obj.geometries().ids()[0]
-abd_local_center = np.asarray(
-    abd_mesh.vertices().find("position").view()).reshape(-1, 3).mean(axis=0)
-fem_local_rest = np.asarray(
-    fem_mesh.vertices().find("position").view()).reshape(-1, 3)
+diag_geo_id = diag_obj.geometries().ids()[0]
+mas_geo_id = mas_obj.geometries().ids()[0]
 
 
-def abd_world_center():
-    slot, _ = scene.geometries().find(abd_geo_id)
-    g = slot.geometry()
-    M = np.asarray(view(g.transforms())[0]).reshape(4, 4)
-    return M[:3, :3] @ abd_local_center + M[:3, 3]
-
-
-def fem_world_center():
-    slot, _ = scene.geometries().find(fem_geo_id)
+def world_centroid(geo_id):
+    slot, _ = scene.geometries().find(geo_id)
     g = slot.geometry()
     pos = np.asarray(g.vertices().find("position").view()).reshape(-1, 3)
     return pos.mean(axis=0)
@@ -185,9 +186,9 @@ def step_frame():
     world.retrieve()
     dt_ms = (time.perf_counter() - t0) * 1e3
     frame_ms.append(dt_ms)
-    c_abd = abd_world_center()
-    c_fem = fem_world_center()
-    traj.append([world.frame(), *c_abd, *c_fem])
+    c_diag = world_centroid(diag_geo_id)
+    c_mas = world_centroid(mas_geo_id)
+    traj.append([world.frame(), *c_diag, *c_mas])
     return dt_ms
 
 
@@ -195,7 +196,7 @@ def report_and_save():
     np.savetxt(f"{workspace}/traj.csv",
                np.asarray(traj),
                delimiter=",",
-               header="frame,abd_cx,abd_cy,abd_cz,fem_cx,fem_cy,fem_cz",
+               header="frame,diag_cx,diag_cy,diag_cz,mas_cx,mas_cy,mas_cz",
                comments="")
     print(f"TOTAL frames={len(frame_ms)} mean={statistics.mean(frame_ms):.1f}ms "
           f"median={statistics.median(frame_ms):.1f}ms")
@@ -211,8 +212,8 @@ if HEADLESS:
         dt_ms = step_frame()
         c = traj[-1]
         print(f"frame {i}: {dt_ms:.1f}ms"
-              f"  abd=({c[1]:.3f},{c[2]:.3f},{c[3]:.3f})"
-              f"  fem=({c[4]:.3f},{c[5]:.3f},{c[6]:.3f})", flush=True)
+              f"  diag=({c[1]:.3f},{c[2]:.3f},{c[3]:.3f})"
+              f"  mas=({c[4]:.3f},{c[5]:.3f},{c[6]:.3f})", flush=True)
     report_and_save()
 else:
     import polyscope as ps

@@ -3,7 +3,8 @@
 Cross-project MAS parity scene (vs Stiff-GIPC set_case7):
   - FEM bunny2.msh, scale 0.2, translate (0, -0.65, 0), SNK E=1e7, nu=0.49,
     rho=1000 (Stiff's SNK parametrization)
-  - MAS preconditioner via mesh_partition(bunny, 16) (Stiff P_type=1)
+  - MAS preconditioner via config linear_system/fem_preconditioner = "mas"
+    (Stiff P_type=1); auto-partitions all FEM geometries internally
   - floor y=-1, dt=0.01, g=-9.8, mu=0.4, kappa=1e8 (= Stiff raw Kappa 1e4
     after libuipc's dt^2 scaling), d_hat_relative=1e-3,
     velocity_tol_relative=1e-2, eps_velocity_relative=1e-2, tol_rate=1e-4,
@@ -21,7 +22,7 @@ import uipc
 from uipc import Logger, Timer, Transform, Vector3, view
 from uipc.core import Engine, World, Scene
 from uipc.geometry import (SimplicialComplexIO, flip_inward_triangles, ground,
-                           label_surface, label_triangle_orient, mesh_partition)
+                           label_surface, label_triangle_orient)
 from uipc.constitution import ElasticModuli, StableNeoHookean
 from uipc.unit import MPa
 
@@ -49,6 +50,9 @@ config["newton"]["transrate_tol"] = 10
 config["newton"]["semi_implicit"]["enable"] = 1
 config["newton"]["semi_implicit"]["beta_tol"] = 1e-2
 config["newton"]["min_iter"] = 6
+# NO_MAS=1 runs the diagonal-preconditioner baseline instead
+if os.environ.get("NO_MAS") != "1":
+    config["linear_system"]["fem_preconditioner"] = "mas"
 # NO_GRAPH=1 disables PCG graph replay (plain launches) for A/B benchmarking
 if os.environ.get("NO_GRAPH") == "1":
     config["linear_system"]["use_cuda_graph"] = 0
@@ -69,9 +73,6 @@ bunny_mesh = flip_inward_triangles(bunny_mesh)
 
 StableNeoHookean().apply_to(
     bunny_mesh, ElasticModuli.youngs_poisson(1e7, 0.49), mass_density=1e3)
-# NO_MAS=1 runs the diagonal-preconditioner baseline instead
-if os.environ.get("NO_MAS") != "1":
-    mesh_partition(bunny_mesh, 16)  # activates the MAS preconditioner
 default_contact.apply_to(bunny_mesh)
 bunny = scene.objects().create("bunny")
 bunny.geometries().create(bunny_mesh)

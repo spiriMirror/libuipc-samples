@@ -49,7 +49,7 @@ config["linear_system"]["tol_rate"] = 1e-4
 config["newton"]["transrate_tol"] = 10
 config["newton"]["semi_implicit"]["enable"] = 1
 config["newton"]["semi_implicit"]["beta_tol"] = 1e-2
-config["newton"]["min_iter"] = 6
+config["newton"]["semi_implicit"]["K_min"] = 6
 # NO_MAS=1 runs the diagonal-preconditioner baseline instead
 if os.environ.get("NO_MAS") != "1":
     config["linear_system"]["fem_preconditioner"] = "mas"
@@ -72,7 +72,7 @@ label_triangle_orient(bunny_mesh)
 bunny_mesh = flip_inward_triangles(bunny_mesh)
 
 StableNeoHookean().apply_to(
-    bunny_mesh, ElasticModuli.youngs_poisson(1e7, 0.49), mass_density=1e3)
+    bunny_mesh, ElasticModuli.youngs_poisson(1e5, 0.49), mass_density=1e3)
 default_contact.apply_to(bunny_mesh)
 bunny = scene.objects().create("bunny")
 bunny.geometries().create(bunny_mesh)

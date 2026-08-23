@@ -78,9 +78,8 @@ config["newton"]["transrate_tol"] = 10
 # from iter>=Kmin=6, exit when beta<=1e-2) -- absorbs hard pile-up frames
 config["newton"]["semi_implicit"]["enable"] = 1
 config["newton"]["semi_implicit"]["beta_tol"] = 1e-2
-config["newton"]["min_iter"] = 6
-# MAS preconditioner: on by default — auto-partitions ALL FEM geometries
-# internally (fixed cluster size); NO_MAS=1 keeps diagonal for A/B
+config["newton"]["semi_implicit"]["K_min"] = 6
+# MAS preconditioner on by default; NO_MAS=1 keeps diagonal for A/B
 if os.environ.get("NO_MAS") != "1":
     config["linear_system"]["fem_preconditioner"] = "mas"
 scene = Scene(config)
@@ -124,7 +123,7 @@ trimesh_path = AssetDir.trimesh_path()
 
 def make_fem_bunny(offset, name):
     mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh", offset, 0.2))
-    snh.apply_to(mesh, ElasticModuli.youngs_poisson(1e7, 0.49), 1e3)
+    snh.apply_to(mesh, ElasticModuli.youngs_poisson(1e4, 0.49), 1e3)
     default_contact.apply_to(mesh)
     obj = scene.objects().create(name)
     obj.geometries().create(mesh)

@@ -8,10 +8,11 @@ unpartitioned bunny (and the cloth) automatically get the internal
 block-Jacobi fallback inside FEMMASPreconditioner.
 
 Scene:
-  - FEM bunny "diag": bunny2.msh, scale 0.2, translate (0, +0.5, 0),
-    E=1e4, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization)
-  - FEM bunny "mas":  same mesh/params at (0, -0.65, 0), plus
+  - FEM bunny "mas":  bunny2.msh, scale 0.2, translate (0, +0.5, 0),
+    E=1e7, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization),
     mesh_partition(mesh, 16) -> MAS preconditioner on its vertices
+  - FEM bunny "diag": same mesh/params at (0, -0.65, 0), no mesh_part ->
+    diagonal (block-Jacobi) fallback inside the same global PCG
   - cloth: cloth_high.obj (4225 verts, x,z in [-1,1] at y=0), t=1e-3, rho=200,
     stretch E=1e4, shear E=1e3, nu=0.40, strain_rate=100;
     bending matched by value: Stiff bendStiff = E_bend*t^3/(24*(1-nu^2))
@@ -33,7 +34,9 @@ Both modes write the tracked-body centroids (diag bunny, MAS bunny) to
 output/examples/88_stiff_gipc_benchmark/traj.csv and print a timing summary
 when the run completes, for cross-project comparison.
 
-Env knobs: WB_TIMER=1 enables Timer reports, WB_LOG=Info sets log level.
+Env knobs: WB_TIMER=1 enables Timer reports, WB_LOG=Info sets log level,
+NO_MAS=1 turns all mesh_partition off (all-diagonal A/B baseline),
+ALL_MAS=1 additionally partitions the lower bunny (full-FEM MAS coverage).
 """
 import os, sys, time
 import statistics
@@ -122,7 +125,7 @@ trimesh_path = AssetDir.trimesh_path()
 
 def make_fem_bunny(offset, use_mas):
     mesh = process_tet(read_tet_transformed(f"{tetmesh_path}/bunny2.msh", offset, 0.2))
-    snh.apply_to(mesh, ElasticModuli.youngs_poisson(1e4, 0.49), 1e3)
+    snh.apply_to(mesh, ElasticModuli.youngs_poisson(1e7, 0.49), 1e3)
     if use_mas:
         # writes the mesh_part vertex attribute -> FEMMASPreconditioner picks
         # these vertices up; everything unpartitioned gets the diagonal
@@ -134,11 +137,15 @@ def make_fem_bunny(offset, use_mas):
     return obj
 
 
-# --- FEM bunny (diagonal preconditioner), upper -----------------------------
-diag_obj = make_fem_bunny(vec3(0.0, 0.5, 0.0), use_mas=False)
+# --- FEM bunny (MAS preconditioner), upper ----------------------------------
+# NO_MAS=1 disables mesh_partition (all-diagonal baseline for A/B);
+# ALL_MAS=1 additionally partitions the lower bunny (full-FEM MAS coverage)
+_no_mas = os.environ.get("NO_MAS") == "1"
+_all_mas = os.environ.get("ALL_MAS") == "1"
+mas_obj = make_fem_bunny(vec3(0.0, 0.5, 0.0), use_mas=(not _no_mas))
 
-# --- FEM bunny (MAS preconditioner), lower ----------------------------------
-mas_obj = make_fem_bunny(vec3(0.0, -0.65, 0.0), use_mas=True)
+# --- FEM bunny (diagonal preconditioner unless ALL_MAS=1), lower ------------
+diag_obj = make_fem_bunny(vec3(0.0, -0.65, 0.0), use_mas=(_all_mas and not _no_mas))
 
 # --- cloth -----------------------------------------------------------------
 cloth_obj = scene.objects().create("cloth")

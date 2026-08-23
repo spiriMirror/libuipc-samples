@@ -95,7 +95,7 @@ def twist(info: Animation.UpdateInfo):
     aim[:, 1] = rest[:, 1] * c - rest[:, 2] * s
     aim[:, 2] = rest[:, 1] * s + rest[:, 2] * c
 
-    ap_view[:] = aim
+    ap_view[:] = aim.reshape(-1, 3, 1)  # Vector3 attribute view is (N,3,1)
     ic_view[:] = END_MASK.astype(np.int32)
 
 
@@ -111,6 +111,7 @@ if HEADLESS:
     import time
     frame_ms = []
     bar_geo_id = bar_obj.geometries().ids()[0]
+    end_vid = int(np.nonzero(END_MASK)[0][0])  # first constrained end vertex
     for _ in range(N_FRAMES):
         t0 = time.perf_counter()
         world.advance()
@@ -121,7 +122,9 @@ if HEADLESS:
             pos = np.asarray(
                 slot.geometry().vertices().find("position").view()).reshape(-1, 3)
             c = pos.mean(axis=0)
-            print(f"track f{world.frame()} centroid=({c[0]:.4f},{c[1]:.4f},{c[2]:.4f})",
+            e = pos[end_vid]
+            print(f"track f{world.frame()} centroid=({c[0]:.4f},{c[1]:.4f},{c[2]:.4f})"
+                  f" end_vid{end_vid}=({e[0]:.4f},{e[1]:.4f},{e[2]:.4f})",
                   flush=True)
     import statistics
     print(f"TOTAL frames={N_FRAMES} mean={statistics.mean(frame_ms):.1f}ms "

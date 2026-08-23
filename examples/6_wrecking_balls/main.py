@@ -142,7 +142,7 @@ def on_update():
         world.advance()
         world.retrieve()
         #world.dump()
-        Timer.report()
+        #Timer.report()
 
     sgui.update()
 

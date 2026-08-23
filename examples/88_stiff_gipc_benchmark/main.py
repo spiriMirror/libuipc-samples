@@ -132,10 +132,11 @@ fem_obj.geometries().create(fem_mesh)
 cloth_obj = scene.objects().create("cloth")
 cloth_mesh = io.read(f"{trimesh_path}/cloth_high.obj")
 label_surface(cloth_mesh)
-cloth_moduli = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_stretch = ElasticModuli2D.youngs_poisson(1e4, 0.40)
+cloth_shear = ElasticModuli2D.youngs_poisson(1e3, 0.40)
 slbws.apply_to(cloth_mesh,
-               stretch_moduli=cloth_moduli,
-               shear_moduli=cloth_moduli,
+               stretch_moduli=cloth_stretch,
+               shear_moduli=cloth_shear,
                mass_density=200,
                thickness=0.001,
                strain_rate=100)

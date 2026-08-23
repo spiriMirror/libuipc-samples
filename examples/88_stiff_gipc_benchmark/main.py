@@ -82,6 +82,9 @@ config["newton"]["semi_implicit"]["K_min"] = 6
 # MAS preconditioner on by default; NO_MAS=1 keeps diagonal for A/B
 if os.environ.get("NO_MAS") != "1":
     config["linear_system"]["fem_preconditioner"] = "mas"
+# NO_GRAPH=1 disables PCG graph replay (plain launches + per-iteration timers)
+if os.environ.get("NO_GRAPH") == "1":
+    config["linear_system"]["use_cuda_graph"] = 0
 scene = Scene(config)
 
 snh = StableNeoHookean()

@@ -49,6 +49,9 @@ config["newton"]["transrate_tol"] = 10
 config["newton"]["semi_implicit"]["enable"] = 1
 config["newton"]["semi_implicit"]["beta_tol"] = 1e-2
 config["newton"]["min_iter"] = 6
+# NO_GRAPH=1 disables PCG graph replay (plain launches) for A/B benchmarking
+if os.environ.get("NO_GRAPH") == "1":
+    config["linear_system"]["use_cuda_graph"] = 0
 scene = Scene(config)
 
 # kappa: Stiff applies raw Kappa=1e4; libuipc scales the barrier by dt^2

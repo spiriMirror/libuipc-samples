@@ -33,6 +33,7 @@ NO_MAS=1 keeps the diagonal preconditioner (A/B baseline).
 """
 import os, sys, time
 import statistics
+from pathlib import Path
 
 import numpy as np
 import uipc
@@ -47,6 +48,10 @@ from uipc.unit import MPa
 
 from asset_dir import AssetDir
 
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from benchmark_utils import (configure_benchmark_timers, emit_benchmark_result,
+                             report_timers_if_enabled, snapshot_frame_stats)
+
 # --------------------------------------------------------------------------
 # args & logging
 # --------------------------------------------------------------------------
@@ -54,7 +59,7 @@ HEADLESS = "--headless" in sys.argv
 _positional = [a for a in sys.argv[1:] if not a.startswith("--")]
 N_FRAMES = int(_positional[0]) if _positional else 250
 
-Timer.enable_all() if os.environ.get("WB_TIMER", "0") == "1" else None
+configure_benchmark_timers()
 Logger.set_level(getattr(Logger.Level, os.environ.get("WB_LOG", "Warn")))
 
 workspace = AssetDir.output_path(__file__)
@@ -172,6 +177,7 @@ def world_centroid(geo_id):
 
 traj = []
 frame_ms = []
+frame_stats = []
 
 
 def step_frame():
@@ -181,6 +187,7 @@ def step_frame():
     world.retrieve()
     dt_ms = (time.perf_counter() - t0) * 1e3
     frame_ms.append(dt_ms)
+    frame_stats.append(snapshot_frame_stats(engine))
     c_upper = world_centroid(upper_geo_id)
     c_lower = world_centroid(lower_geo_id)
     traj.append([world.frame(), *c_upper, *c_lower])
@@ -193,10 +200,17 @@ def report_and_save():
                delimiter=",",
                header="frame,upper_cx,upper_cy,upper_cz,lower_cx,lower_cy,lower_cz",
                comments="")
-    print(f"TOTAL frames={len(frame_ms)} mean={statistics.mean(frame_ms):.1f}ms "
-          f"median={statistics.median(frame_ms):.1f}ms")
+    observables = {}
+    if traj:
+        final = traj[-1]
+        observables = {
+            "final_frame": int(final[0]),
+            "upper_centroid": [float(value) for value in final[1:4]],
+            "lower_centroid": [float(value) for value in final[4:7]],
+        }
+    emit_benchmark_result(frame_ms, frame_stats, observables=observables)
     print(f"traj saved to {workspace}/traj.csv")
-    Timer.report()
+    report_timers_if_enabled()
 
 
 # --------------------------------------------------------------------------

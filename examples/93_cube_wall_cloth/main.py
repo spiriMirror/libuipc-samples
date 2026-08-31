@@ -19,6 +19,7 @@ Usage:
   python main.py --headless [N]   # N frames (default 100)
 """
 import os, sys
+from pathlib import Path
 
 import numpy as np
 import uipc
@@ -33,11 +34,16 @@ from uipc.unit import MPa
 
 from asset_dir import AssetDir
 
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from benchmark_utils import (configure_benchmark_timers, emit_benchmark_result,
+                             report_timers_if_enabled, snapshot_frame_stats)
+
 HEADLESS = "--headless" in sys.argv
 _positional = [a for a in sys.argv[1:] if not a.startswith("--")]
 N_FRAMES = int(_positional[0]) if _positional else 100
 
-Logger.set_level(Logger.Level.Info if HEADLESS else Logger.Level.Warn)
+configure_benchmark_timers()
+Logger.set_level(getattr(Logger.Level, os.environ.get("WB_LOG", "Warn")))
 
 workspace = AssetDir.output_path(__file__)
 engine = Engine("cuda", workspace)
@@ -139,22 +145,36 @@ world.init(scene)
 if HEADLESS:
     import time
     frame_ms = []
+    frame_stats = []
     cloth_geo_id = cloth_obj.geometries().ids()[0]
+    final_min_y = None
     for _ in range(N_FRAMES):
         t0 = time.perf_counter()
         world.advance()
         world.retrieve()
         frame_ms.append((time.perf_counter() - t0) * 1e3)
+        frame_stats.append(snapshot_frame_stats(engine))
         if world.frame() % 10 == 0:
             slot, _ = scene.geometries().find(cloth_geo_id)
             p = np.asarray(
                 slot.geometry().vertices().find("position").view()).reshape(-1, 3)
-            print(f"track f{world.frame()} cloth_min_y={p[:, 1].min():.4f}",
+            final_min_y = float(p[:, 1].min())
+            print(f"track f{world.frame()} cloth_min_y={final_min_y:.4f}",
                   flush=True)
-    import statistics
-    print(f"TOTAL frames={N_FRAMES} mean={statistics.mean(frame_ms):.1f}ms "
-          f"median={statistics.median(frame_ms):.1f}ms", flush=True)
-    Timer.report()
+    if final_min_y is None:
+        slot, _ = scene.geometries().find(cloth_geo_id)
+        p = np.asarray(
+            slot.geometry().vertices().find("position").view()).reshape(-1, 3)
+        final_min_y = float(p[:, 1].min())
+    emit_benchmark_result(
+        frame_ms,
+        frame_stats,
+        observables={
+            "final_frame": int(world.frame()),
+            "cloth_min_y": final_min_y,
+        },
+    )
+    report_timers_if_enabled()
 else:
     import polyscope as ps
     from polyscope import imgui

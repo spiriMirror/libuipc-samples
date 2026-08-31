@@ -9,11 +9,9 @@ PCG iterations and 2.1x faster wall time than all-diagonal on this scene.
 Scene:
   - FEM bunny x2: bunny2.msh, scale 0.2, translate (0, +0.5, 0) / (0, -0.65, 0),
     E=1e7, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization)
-  - cloth: cloth_high.obj (4225 verts, x,z in [-1,1] at y=0), t=1e-3, rho=200,
-    stretch E=1e4, shear E=1e3, nu=0.40, strain_rate=100;
-    bending matched by value: Stiff bendStiff = E_bend*t^3/(24*(1-nu^2))
-    = 5.48e-3 with E_bend=1e8
-    -> libuipc DiscreteShellBending with E=5e7 gives E*t^3/(12*(1-nu^2)) = 5.48e-3
+  - cloth: cloth_high.obj (4225 verts, x,z in [-1,1] at y=0), using the
+    shared samples material preset: stretch E=5e4, shear E=1e1, nu=0.49,
+    one-sided thickness r=1e-3, rho=200, strain_rate=100, bending E=3e4
   - ground: floor y=-1 (Stiff's 4 side "walls" at x=-1/z=-1 are self-canceling
     duplicate half-planes and are omitted)
 
@@ -141,15 +139,15 @@ lower_obj = make_fem_bunny(vec3(0.0, -0.65, 0.0), "fem_bunny_lower")
 cloth_obj = scene.objects().create("cloth")
 cloth_mesh = io.read(f"{trimesh_path}/cloth_high.obj")
 label_surface(cloth_mesh)
-cloth_stretch = ElasticModuli2D.youngs_poisson(1e4, 0.40)
-cloth_shear = ElasticModuli2D.youngs_poisson(1e3, 0.40)
+cloth_stretch = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_shear = ElasticModuli2D.youngs_poisson(1e1, 0.49)
 slbws.apply_to(cloth_mesh,
                stretch_moduli=cloth_stretch,
                shear_moduli=cloth_shear,
                mass_density=200,
                thickness=0.001,
                strain_rate=100)
-dsb.apply_to(cloth_mesh, 5e7, 0.49)  # kappa_bend = 5.48e-3, matches Stiff
+dsb.apply_to(cloth_mesh, 3e4, 0.49)
 cloth_obj.geometries().create(cloth_mesh)
 
 # --- ground (floor y=-1) ----------------------------------------------------

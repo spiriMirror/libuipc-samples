@@ -4,14 +4,23 @@ This is a simple cloth simulation with libuipc.
 
 ![image](image.png)
 
-In this example, we use `NeoHookeanShell` and `DiscreteShellBending` to simulate the cloth.
+In this example, we use `StrainLimitingBaraffWitkinShell` and
+`DiscreteShellBending` to simulate the cloth. All cloth examples share this
+material preset.
 
-Note that in order to keep the consistency of Elastic Moduli, we use a unified interface called `ElasticModuli`, and specify the Young's modulus and Poisson's ratio to calculate the Lamé parameters.
+The `thickness` value is the one-sided radius; the shell constitutions use the
+full material thickness `2r` where physical thickness is required.
 
 ```python
-nks = NeoHookeanShell()
+slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-moduli = ElasticModuli.youngs_poisson(10 * kPa, 0.499)
-nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
-dsb.apply_to(cloth_mesh, bending_stiffness = 10.0)
+cloth_stretch = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_shear = ElasticModuli2D.youngs_poisson(1e1, 0.49)
+slbws.apply_to(cloth_mesh,
+               stretch_moduli=cloth_stretch,
+               shear_moduli=cloth_shear,
+               mass_density=200,
+               thickness=0.001,
+               strain_rate=100)
+dsb.apply_to(cloth_mesh, 3e4, 0.49)
 ```

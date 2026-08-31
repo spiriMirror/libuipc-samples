@@ -11,9 +11,9 @@ from uipc.constitution import (
     DiscreteShellBending,
     ElasticModuli2D,
     Empty,
-    NeoHookeanShell,
     SoftPositionConstraint,
     SoftVertexStitch,
+    StrainLimitingBaraffWitkinShell,
 )
 from uipc.core import Engine, Scene, SceneIO, World
 from uipc.geometry import (
@@ -42,7 +42,7 @@ print(config)
 scene = Scene(config)
 
 empty = Empty()
-snh = NeoHookeanShell()
+slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
 spc = SoftPositionConstraint()
 io = SimplicialComplexIO()
@@ -54,17 +54,27 @@ scene.contact_tabular().default_model(0.01, 1e9)
 t_shirt_front_elem = scene.contact_tabular().create("t_shirt_front")
 t_shirt_back_elem = scene.contact_tabular().create("t_shirt_back")
 
-moduli = ElasticModuli2D.youngs_poisson(1e5, 0.49)
+cloth_stretch = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_shear = ElasticModuli2D.youngs_poisson(1e1, 0.49)
 t_shirt_obj = scene.objects().create("t_shirt")
 t_shirt_front = io.read(str(curr_folder / "output_panel_top_front.obj"))
 t_shirt_back = io.read(str(curr_folder / "output_panel_top_back.obj"))
 label_surface(t_shirt_front)
 label_surface(t_shirt_back)
-snh.apply_to(t_shirt_front, moduli=moduli, thickness=0.0002, mass_density=100.0)
-snh.apply_to(t_shirt_back, moduli=moduli, thickness=0.0002, mass_density=100.0)
-
-dsb.apply_to(t_shirt_front, bending_stiffness=0.002)  # area measure: kappa*t(0.0002)
-dsb.apply_to(t_shirt_back, bending_stiffness=0.002)  # area measure: kappa*t(0.0002)
+slbws.apply_to(t_shirt_front,
+               stretch_moduli=cloth_stretch,
+               shear_moduli=cloth_shear,
+               mass_density=200,
+               thickness=0.001,
+               strain_rate=100)
+slbws.apply_to(t_shirt_back,
+               stretch_moduli=cloth_stretch,
+               shear_moduli=cloth_shear,
+               mass_density=200,
+               thickness=0.001,
+               strain_rate=100)
+dsb.apply_to(t_shirt_front, 3e4, 0.49)
+dsb.apply_to(t_shirt_back, 3e4, 0.49)
 t_shirt_front_elem.apply_to(t_shirt_front)
 t_shirt_back_elem.apply_to(t_shirt_back)
 

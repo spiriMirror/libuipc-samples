@@ -11,11 +11,11 @@ from uipc.constitution import (
     DiscreteShellBending,
     ElasticModuli2D,
     ExternalArticulationConstraint,
-    NeoHookeanShell,
+    StrainLimitingBaraffWitkinShell,
 )
 from uipc.geometry import SimplicialComplex, SimplicialComplexIO, affine_body, label_surface
 from uipc.gui import SceneGUI
-from uipc.unit import GPa, MPa, kPa
+from uipc.unit import GPa, MPa
 
 #Timer.enable_all()
 Logger.set_level(Logger.Level.Off)
@@ -188,11 +188,17 @@ cloth_mesh = io_cloth.read(f"{trimesh_path}/grid20x20.obj")
 label_surface(cloth_mesh)
 
 # Apply cloth constitutions
-nks = NeoHookeanShell()
+slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-moduli = ElasticModuli2D.youngs_poisson(500 * kPa, 0.49)
-nks.apply_to(cloth_mesh, moduli=moduli, mass_density=200, thickness=0.001)
-dsb.apply_to(cloth_mesh, bending_stiffness=0.001)  # area measure: kappa*t(0.001)
+cloth_stretch = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_shear = ElasticModuli2D.youngs_poisson(1e1, 0.49)
+slbws.apply_to(cloth_mesh,
+               stretch_moduli=cloth_stretch,
+               shear_moduli=cloth_shear,
+               mass_density=200,
+               thickness=0.001,
+               strain_rate=100)
+dsb.apply_to(cloth_mesh, 3e4, 0.49)
 
 # Position cloth above the articulated system
 cloth_pos_view = view(cloth_mesh.positions())

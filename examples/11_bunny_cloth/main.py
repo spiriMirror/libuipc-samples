@@ -8,7 +8,7 @@ import uipc.builtin as builtin
 from uipc.core import Engine, World, Scene
 from uipc.geometry import tetmesh, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.geometry import SimplicialComplexIO
-from uipc.constitution import AffineBodyConstitution, NeoHookeanShell, DiscreteShellBending, ElasticModuli2D, StrainLimitingBaraffWitkinShell
+from uipc.constitution import AffineBodyConstitution, DiscreteShellBending, ElasticModuli2D, StrainLimitingBaraffWitkinShell
 from uipc.gui import SceneGUI 
 from uipc.unit import MPa, GPa, kPa 
 
@@ -38,16 +38,17 @@ t.scale(2.0)
 io = SimplicialComplexIO(t)
 cloth_mesh = io.read(f"{trimesh_path}/grid20x20.obj")
 label_surface(cloth_mesh)
-#nks = NeoHookeanShell()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-# stretch / shear / bend have independent material parameters
-stretch_moduli = ElasticModuli2D.youngs_poisson(5e4, 0.4)
-shear_moduli = ElasticModuli2D.youngs_poisson(5e2, 0.4)  # shear 100x softer than stretch
-slbws.apply_to(cloth_mesh, stretch_moduli=stretch_moduli, shear_moduli=shear_moduli, mass_density=200, thickness=0.001)
-# bend via the formula overload: kappa = E*t^3/(12*(1-nu^2)) ~= 5.95e-6
-# (thickness is taken from the mesh, set by the membrane constitution above)
-dsb.apply_to(cloth_mesh, 6e4, 0.4)
+cloth_stretch = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_shear = ElasticModuli2D.youngs_poisson(1e1, 0.49)
+slbws.apply_to(cloth_mesh,
+               stretch_moduli=cloth_stretch,
+               shear_moduli=cloth_shear,
+               mass_density=200,
+               thickness=0.001,
+               strain_rate=100)
+dsb.apply_to(cloth_mesh, 3e4, 0.49)
 view(cloth_mesh.positions())[:] += 1.0
 cloth.geometries().create(cloth_mesh)
 

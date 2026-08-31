@@ -15,7 +15,7 @@ from uipc.constitution import (
     StrainLimitingBaraffWitkinShell,
 )
 from uipc.gui import SceneGUI
-from uipc.unit import MPa, kPa
+from uipc.unit import MPa
 
 from asset_dir import AssetDir
 
@@ -46,10 +46,10 @@ scene.contact_tabular().default_model(0.02, 1e8)
 abd = AffineBodyConstitution()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-cloth_stretch_moduli = ElasticModuli2D.youngs_poisson(60 * kPa, 0.49)
-cloth_shear_moduli = ElasticModuli2D.youngs_poisson(0.6 * kPa, 0.49)  # shear 100x softer
+cloth_stretch_moduli = ElasticModuli2D.youngs_poisson(5e4, 0.49)
+cloth_shear_moduli = ElasticModuli2D.youngs_poisson(1e1, 0.49)
 
-def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending_stiffness: float):
+def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation):
     pre = Transform.Identity()
     pre.translate(pos)
     pre.rotate(rotation)
@@ -57,8 +57,13 @@ def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation, bending
     io = SimplicialComplexIO(pre)
     cloth_mesh = io.read(mesh_file)
     label_surface(cloth_mesh)
-    slbws.apply_to(cloth_mesh, stretch_moduli=cloth_stretch_moduli, shear_moduli=cloth_shear_moduli, mass_density=200, thickness=0.001)
-    dsb.apply_to(cloth_mesh, bending_stiffness=bending_stiffness)
+    slbws.apply_to(cloth_mesh,
+                   stretch_moduli=cloth_stretch_moduli,
+                   shear_moduli=cloth_shear_moduli,
+                   mass_density=200,
+                   thickness=0.001,
+                   strain_rate=100)
+    dsb.apply_to(cloth_mesh, 3e4, 0.49)
     cloth_obj = scene.objects().create(name)
     cloth_obj.geometries().create(cloth_mesh)
 
@@ -71,7 +76,6 @@ create_cloth(
     scale=0.5,
     pos=(0.5, 0.0, 0.1),
     rotation=AngleAxis(np.pi / 2, Vector3.UnitX()),
-    bending_stiffness=0.01,  # area measure: kappa*t(0.001)
 )
 create_cloth(
     name="cloth_mid",
@@ -79,7 +83,6 @@ create_cloth(
     scale=0.3,
     pos=(0.5, 0.0, 0.14),
     rotation=AngleAxis(np.pi / 2, Vector3.UnitX()),
-    bending_stiffness=40.0,
 )
 create_cloth(
     name="cloth_small",
@@ -87,7 +90,6 @@ create_cloth(
     scale=0.2,
     pos=(0.5, 0.0, 0.16),
     rotation=AngleAxis(np.pi / 2, Vector3.UnitX()),
-    bending_stiffness=40.0,
 )
 create_cloth(
     name="cloth_tiny",
@@ -95,7 +97,6 @@ create_cloth(
     scale=0.1,
     pos=(0.5, 0.0, 0.18),
     rotation=AngleAxis(np.pi / 2, Vector3.UnitX()),
-    bending_stiffness=40.0,
 )
 
 # ----------------------------------------------------------------------

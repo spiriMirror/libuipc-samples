@@ -8,9 +8,9 @@ its |x|>1.5 sides (cloth_high.obj, scale 1.5 then translate y+0.35 in
 Stiff's transform order, i.e. v' = 1.5*(v + (0,0.35,0))).
 
 Stiff parameters retained for the cube wall are stiff_cube.msh, scale 0.3,
-spacing 0.15, relative_dhat=1e-3, and P_type=1 (MAS). The cloth uses the
-shared example 88 material preset: stretch E=5e4, shear E=1e1, nu=0.49,
-one-sided thickness r=1e-3, rho=200, strain_rate=100, and bending E=3e4.
+spacing 0.15, relative_dhat=1e-3, and P_type=1 (MAS). The cloth uses stretch
+E=5e4, shear E=1e1, nu=0.49, one-sided thickness r=1e-3, rho=200,
+case-specific strain_rate=10000, and bending E=3e4.
 
 Global parameters follow the established Stiff-GIPC alignment (see 88/89).
 
@@ -115,7 +115,7 @@ slbws.apply_to(cloth_mesh,
                shear_moduli=cloth_shear,
                mass_density=200,
                thickness=0.001,
-               strain_rate=100)
+               strain_rate=10000)
 dsb.apply_to(cloth_mesh, 3e4, 0.49)
 
 pos = np.asarray(cloth_mesh.positions().view()).reshape(-1, 3)

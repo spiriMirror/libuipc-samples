@@ -46,8 +46,8 @@ scene.contact_tabular().default_model(0.02, 1e8)
 abd = AffineBodyConstitution()
 slbws = StrainLimitingBaraffWitkinShell()
 dsb = DiscreteShellBending()
-cloth_stretch_moduli = ElasticModuli2D.youngs_poisson(5e4, 0.49)
-cloth_shear_moduli = ElasticModuli2D.youngs_poisson(1e1, 0.49)
+cloth_stretch_moduli = ElasticModuli2D.youngs_poisson(1e4, 0.40)
+cloth_shear_moduli = ElasticModuli2D.youngs_poisson(1e1, 0.40)
 
 def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation):
     pre = Transform.Identity()
@@ -63,7 +63,7 @@ def create_cloth(name: str, mesh_file: str, scale: float, pos, rotation):
                    mass_density=200,
                    thickness=0.001,
                    strain_rate=100)
-    dsb.apply_to(cloth_mesh, 3e4, 0.49)
+    dsb.apply_to(cloth_mesh, 1e4, 0.40)
     cloth_obj = scene.objects().create(name)
     cloth_obj.geometries().create(cloth_mesh)
 

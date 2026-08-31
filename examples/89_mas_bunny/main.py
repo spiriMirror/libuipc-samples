@@ -1,7 +1,7 @@
 """Example 89 -- single FEM bunny on the ground with the MAS preconditioner.
 
 Cross-project MAS parity scene (vs Stiff-GIPC set_case7):
-  - FEM bunny2.msh, scale 0.2, translate (0, -0.65, 0), SNK E=1e7, nu=0.49,
+  - FEM bunny2.msh, scale 0.2, translate (0, -0.65, 0), SNK E=1e5, nu=0.49,
     rho=1000 (Stiff's SNK parametrization)
   - MAS preconditioner via config linear_system/fem_preconditioner = "mas"
     (Stiff P_type=1); auto-partitions all FEM geometries internally
@@ -12,8 +12,10 @@ Cross-project MAS parity scene (vs Stiff-GIPC set_case7):
 
 Usage:
   python main.py                  # GUI with run/stop
-  python main.py --headless [N]   # N frames (default 100), logs per-solve
-                                  # PCG iteration counts + a summary line
+  python main.py --headless [N]   # N frames (default 100), structured summary
+
+Set WB_LOG=Info for per-solve logs. Set UIPC_BENCHMARK_TIMERS=1 only for a
+separate synchronized stage diagnostic.
 """
 import os, sys, time
 from pathlib import Path

@@ -3,12 +3,13 @@
 Derived from the Stiff-GIPC set_case2 benchmark: the original ABD bunny is
 replaced by a second FEM bunny. The MAS preconditioner is enabled via scene
 config (`linear_system/fem_preconditioner = "mas"`) and auto-partitions ALL
-FEM geometries internally (both bunnies and the cloth) -- measured 4.6x fewer
-PCG iterations and 2.1x faster wall time than all-diagonal on this scene.
+FEM geometries internally (both bunnies and the cloth). Historical MAS/diagonal
+A/B results are intentionally not embedded here; use the versioned root
+benchmark record for current measurements.
 
 Scene:
   - FEM bunny x2: bunny2.msh, scale 0.2, translate (0, +0.5, 0) / (0, -0.65, 0),
-    E=1e7, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization)
+    E=1e4, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization)
   - cloth: cloth_high.obj (4225 verts, x,z in [-1,1] at y=0), using the
     shared samples material preset: stretch E=5e4, shear E=1e1, nu=0.49,
     one-sided thickness r=1e-3, rho=200, strain_rate=100, bending E=3e4
@@ -28,8 +29,9 @@ Both modes write the tracked-body centroids (upper bunny, lower bunny) to
 output/examples/88_stiff_gipc_benchmark/traj.csv and print a timing summary
 when the run completes, for cross-project comparison.
 
-Env knobs: WB_TIMER=1 enables Timer reports, WB_LOG=Info sets log level,
-NO_MAS=1 keeps the diagonal preconditioner (A/B baseline).
+Env knobs: UIPC_BENCHMARK_TIMERS=1 (or legacy WB_TIMER=1) enables synchronized
+Timer reports, WB_LOG=Info sets log level, and NO_MAS=1 keeps the diagonal
+preconditioner as a distinct A/B workload.
 """
 import os, sys, time
 import statistics

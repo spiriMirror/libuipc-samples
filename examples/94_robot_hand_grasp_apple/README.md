@@ -21,7 +21,9 @@ python main.py --headless 500
 The GUI advances four solver steps per displayed output frame. The headless mode
 writes `validation.json` and `trajectory.npz` under
 `output/examples/94_robot_hand_grasp_apple/`. Add `--write-surfaces` to export
-OBJ surfaces at representative action frames.
+OBJ surfaces at representative action frames. Short headless runs use a frame
+count suffix such as `validation_0050.json`, so they never replace the complete
+500-frame evidence.
 
 The checked full run requires the apple to be lifted by more than 0.15 m,
 transported by more than 0.35 m, supported at the destination, settled after

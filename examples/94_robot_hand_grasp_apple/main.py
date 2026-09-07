@@ -408,10 +408,11 @@ def run_headless(args, engine, world, scene, trajectory, links, apple_slot):
         )
     result["success"] = not errors
     result["errors"] = errors
-    (output / "validation.json").write_text(
+    suffix = "" if args.frames == LAST_FRAME else f"_{args.frames:04d}"
+    (output / f"validation{suffix}.json").write_text(
         json.dumps(result, indent=2), encoding="utf-8"
     )
-    np.savez_compressed(output / "trajectory.npz", apple_centers=centers)
+    np.savez_compressed(output / f"trajectory{suffix}.npz", apple_centers=centers)
     print("ROBOT_HAND_GRASP_APPLE " + json.dumps(result), flush=True)
     if errors:
         raise AssertionError("; ".join(errors))

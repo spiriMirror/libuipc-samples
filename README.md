@@ -11,6 +11,13 @@ sample-87 URDF hand and performs a verified four-finger pick, transfer and
 release of a free ABD apple. Run its GUI or use `python main.py --headless 500`
 for the full numerical validation.
 
+## Directional cloth example
+
+[`95_anisotropic_cloth`](examples/95_anisotropic_cloth/) compares shared stretch,
+a-stiff and b-stiff sheets under identical biaxial loading. Run its GUI or
+`python main.py --headless 120 --validate` for numerical checks. It requires
+pyuipc built with the new directional cloth API; see the example README.
+
 ## Install (uv recommended)
 
 Install base dependencies (without `pyuipc`):

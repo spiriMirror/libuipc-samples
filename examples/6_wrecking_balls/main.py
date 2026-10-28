@@ -1,7 +1,15 @@
+"""Wrecking balls sample with GUI and reproducible headless benchmark modes.
+
+Usage:
+  python main.py                  # interactive GUI
+  python main.py --headless 120   # pure-ABD contact benchmark
+"""
+
 import json
+import os
+import sys
+import time
 import numpy as np
-import polyscope as ps
-from polyscope import imgui
 from pathlib import Path
 
 import uipc
@@ -11,9 +19,17 @@ from uipc.core import Engine, World, Scene
 from uipc.geometry import SimplicialComplex, SimplicialComplexIO, ground, label_surface, label_triangle_orient, flip_inward_triangles
 from uipc.constitution import AffineBodyConstitution
 from uipc.unit import MPa, GPa
-from uipc.gui import SceneGUI
 
 from asset_dir import AssetDir
+
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from benchmark_utils import (configure_benchmark_timers, emit_benchmark_result,
+                             report_timers_if_enabled, snapshot_frame_stats)
+
+
+HEADLESS = "--headless" in sys.argv
+_positional = [arg for arg in sys.argv[1:] if not arg.startswith("--")]
+N_FRAMES = int(_positional[0]) if _positional else 120
 
 
 def process_surface(sc: SimplicialComplex):
@@ -23,8 +39,8 @@ def process_surface(sc: SimplicialComplex):
     return sc
 
 
-#Timer.enable_all()
-Logger.set_level(Logger.Level.Off)
+configure_benchmark_timers()
+Logger.set_level(getattr(Logger.Level, os.environ.get("WB_LOG", "Warn")))
 workspace = AssetDir.output_path(__file__)
 folder = AssetDir.folder(__file__)
 
@@ -123,29 +139,63 @@ for obj in wrecking_ball_scene:
 ground_obj = scene.objects().create("ground")
 ground_obj.geometries().create(ground(-1.0))
 
-sgui = SceneGUI(scene)
 world.init(scene)
 
-ps.init()
-tri_surf, _, _ = sgui.register()
-tri_surf.set_edge_width(1)
-
-run = False
-
-
-def on_update():
-    global run
-    if imgui.Button("run & stop"):
-        run = not run
-
-    if run:
+if HEADLESS:
+    ball_geo_id = ball_obj.geometries().ids()[0]
+    local_center = np.asarray(
+        ball.vertices().find("position").view()).reshape(-1, 3).mean(axis=0)
+    frame_ms = []
+    frame_stats = []
+    final_center = None
+    for i in range(N_FRAMES):
+        t0 = time.perf_counter()
         world.advance()
         world.retrieve()
-        #world.dump()
-        #Timer.report()
+        frame_ms.append((time.perf_counter() - t0) * 1e3)
+        frame_stats.append(snapshot_frame_stats(engine))
 
-    sgui.update()
+        slot, _ = scene.geometries().find(ball_geo_id)
+        transform = np.asarray(view(slot.geometry().transforms())[0]).reshape(4, 4)
+        final_center = transform[:3, :3] @ local_center + transform[:3, 3]
+        if i % 25 == 0 or i == N_FRAMES - 1:
+            print(
+                f"frame {i}: ball_center=({final_center[0]:.3f},"
+                f"{final_center[1]:.3f},{final_center[2]:.3f})",
+                flush=True,
+            )
 
+    emit_benchmark_result(
+        frame_ms,
+        frame_stats,
+        observables={
+            "final_frame": int(world.frame()),
+            "ball_center": [float(value) for value in final_center],
+        },
+    )
+    report_timers_if_enabled()
+else:
+    import polyscope as ps
+    from polyscope import imgui
+    from uipc.gui import SceneGUI
 
-ps.set_user_callback(on_update)
-ps.show()
+    sgui = SceneGUI(scene)
+    ps.init()
+    tri_surf, _, _ = sgui.register()
+    tri_surf.set_edge_width(1)
+
+    run = False
+
+    def on_update():
+        global run
+        if imgui.Button("run & stop"):
+            run = not run
+
+        if run:
+            world.advance()
+            world.retrieve()
+
+        sgui.update()
+
+    ps.set_user_callback(on_update)
+    ps.show()

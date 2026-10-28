@@ -3,12 +3,12 @@
 Derived from the Stiff-GIPC set_case2 benchmark: the original ABD bunny is
 replaced by a second FEM bunny. The MAS preconditioner is enabled via scene
 config (`linear_system/fem_preconditioner = "mas"`) and auto-partitions ALL
-FEM geometries internally (both bunnies and the cloth) -- measured 4.6x fewer
-PCG iterations and 2.1x faster wall time than all-diagonal on this scene.
+FEM geometries internally (both bunnies and the cloth). Measure performance
+on the same machine and configuration for each version under comparison.
 
 Scene:
   - FEM bunny x2: bunny2.msh, scale 0.2, translate (0, +0.5, 0) / (0, -0.65, 0),
-    E=1e7, nu=0.49, rho=1000 (StableNeoHookean ~ Stiff's SNK parametrization)
+    E=1e4, nu=0.49, rho=1000 (StableNeoHookean)
   - cloth: cloth_high.obj (4225 verts, x,z in [-1,1] at y=0), using the
     shared samples material preset: stretch E=5e4, shear E=1e1, nu=0.49,
     one-sided thickness r=1e-3, rho=200, strain_rate=100, bending E=3e4
@@ -28,11 +28,13 @@ Both modes write the tracked-body centroids (upper bunny, lower bunny) to
 output/examples/88_stiff_gipc_benchmark/traj.csv and print a timing summary
 when the run completes, for cross-project comparison.
 
-Env knobs: WB_TIMER=1 enables Timer reports, WB_LOG=Info sets log level,
+Env knobs: UIPC_BENCHMARK_TIMERS=1 enables Timer reports (WB_TIMER is a legacy
+fallback), WB_LOG=Info sets log level,
 NO_MAS=1 keeps the diagonal preconditioner (A/B baseline).
 """
 import os, sys, time
 import statistics
+from pathlib import Path
 
 import numpy as np
 import uipc
@@ -47,6 +49,10 @@ from uipc.unit import MPa
 
 from asset_dir import AssetDir
 
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from benchmark_utils import (configure_benchmark_timers, emit_benchmark_result,
+                             report_timers_if_enabled, snapshot_frame_stats)
+
 # --------------------------------------------------------------------------
 # args & logging
 # --------------------------------------------------------------------------
@@ -54,7 +60,7 @@ HEADLESS = "--headless" in sys.argv
 _positional = [a for a in sys.argv[1:] if not a.startswith("--")]
 N_FRAMES = int(_positional[0]) if _positional else 250
 
-Timer.enable_all() if os.environ.get("WB_TIMER", "0") == "1" else None
+configure_benchmark_timers()
 Logger.set_level(getattr(Logger.Level, os.environ.get("WB_LOG", "Warn")))
 
 workspace = AssetDir.output_path(__file__)
@@ -172,6 +178,7 @@ def world_centroid(geo_id):
 
 traj = []
 frame_ms = []
+frame_stats = []
 
 
 def step_frame():
@@ -181,6 +188,7 @@ def step_frame():
     world.retrieve()
     dt_ms = (time.perf_counter() - t0) * 1e3
     frame_ms.append(dt_ms)
+    frame_stats.append(snapshot_frame_stats(engine))
     c_upper = world_centroid(upper_geo_id)
     c_lower = world_centroid(lower_geo_id)
     traj.append([world.frame(), *c_upper, *c_lower])
@@ -193,10 +201,17 @@ def report_and_save():
                delimiter=",",
                header="frame,upper_cx,upper_cy,upper_cz,lower_cx,lower_cy,lower_cz",
                comments="")
-    print(f"TOTAL frames={len(frame_ms)} mean={statistics.mean(frame_ms):.1f}ms "
-          f"median={statistics.median(frame_ms):.1f}ms")
+    observables = {}
+    if traj:
+        final = traj[-1]
+        observables = {
+            "final_frame": int(final[0]),
+            "upper_centroid": [float(value) for value in final[1:4]],
+            "lower_centroid": [float(value) for value in final[4:7]],
+        }
+    emit_benchmark_result(frame_ms, frame_stats, observables=observables)
     print(f"traj saved to {workspace}/traj.csv")
-    Timer.report()
+    report_timers_if_enabled()
 
 
 # --------------------------------------------------------------------------

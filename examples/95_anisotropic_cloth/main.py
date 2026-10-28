@@ -6,6 +6,8 @@ StrainLimitingBaraffWitkinShell overload before running this example.
 
 import argparse
 import json
+import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -19,6 +21,13 @@ from uipc.constitution import (
 )
 from uipc.geometry import label_surface, trimesh
 
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from benchmark_utils import (
+    configure_benchmark_timers,
+    emit_benchmark_result,
+    report_timers_if_enabled,
+    snapshot_frame_stats,
+)
 
 CASES = ("shared", "a_stiff", "b_stiff")
 COLORS = ((0.65, 0.65, 0.7), (0.9, 0.35, 0.2), (0.2, 0.5, 0.9))
@@ -162,6 +171,8 @@ def main():
         parser.error("Installed pyuipc lacks directional cloth support; build the updated libuipc source")
     args.output.mkdir(parents=True, exist_ok=True)
     Logger.set_level(Logger.Level.Warn)
+    if args.headless is not None:
+        configure_benchmark_timers()
     scene, records, triangles = create_scene(args)
     engine = Engine("cuda", str(args.output))
     world = World(engine)
@@ -176,8 +187,13 @@ def main():
             raise RuntimeError(f"Simulation failed at frame {world.frame()}")
 
     if args.headless is not None:
+        frame_ms = []
+        frame_stats = []
         for frame in range(args.headless):
+            start = time.perf_counter()
             advance()
+            frame_ms.append((time.perf_counter() - start) * 1e3)
+            frame_stats.append(snapshot_frame_stats(engine))
             if (frame + 1) % 20 == 0:
                 print(f"frame {world.frame()}/{args.headless}", flush=True)
         result = measurements(records, args.resolution)
@@ -190,6 +206,8 @@ def main():
             for name, record in records.items()
         })
         print(json.dumps(report, indent=2))
+        emit_benchmark_result(frame_ms, frame_stats, observables=report)
+        report_timers_if_enabled()
         return
 
     import polyscope as ps

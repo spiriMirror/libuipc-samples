@@ -18,6 +18,20 @@ a-stiff and b-stiff sheets under identical biaxial loading. Run its GUI or
 `python main.py --headless 120 --validate` for numerical checks. It requires
 pyuipc built with the new directional cloth API; see the example README.
 
+## Headless performance workloads
+
+Examples 6, 88, 89, 93 and 95 support `python main.py --headless <frames>`
+without opening a viewer. They emit `BENCHMARK_RESULT` containing per-frame
+wall times, backend iteration/completion statistics and final physical
+observables. Throughput runs disable synchronized Timer scopes by default;
+set `UIPC_BENCHMARK_TIMERS=1` for a separate diagnostic run.
+
+Start with example 95 using `--resolution 8 --headless 30` for a small procedural
+cloth workload. The parent repository owns the versioned workloads and
+[comparison protocol](https://github.com/spiriMirror/libuipc/blob/main/docs/development/testing_and_benchmarks.md).
+Compare versions on the same machine and settings; hardware is measurement
+metadata, with no prescribed GPU model or universal frame-time limit.
+
 ## Install (uv recommended)
 
 Install base dependencies (without `pyuipc`):

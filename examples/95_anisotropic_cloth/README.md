@@ -30,7 +30,16 @@ strains. Click **Run** to start. The headless command checks finite positions,
 fixed pins and reduced strain along each stiff direction, then writes
 `summary.json` and `cloth_positions.npz` beneath
 `output/examples/95_anisotropic_cloth/`. This is a dynamic comparison at a
-finite frame count, not an equilibrium or performance benchmark.
+finite frame count, not an equilibrium measurement.
+
+Headless runs also emit `BENCHMARK_RESULT` with per-frame wall times, solver
+statistics and final strains. The parent libuipc benchmark registry selects
+`--resolution 8 --headless 30` as its small workload (243 total vertices and
+384 triangles). This short workload measures execution; use the 120-frame
+`--validate` command above to check the directional material response.
+Synchronized Timer diagnostics are disabled unless `UIPC_BENCHMARK_TIMERS=1`.
+Compare timings on the same machine and configuration; no GPU model or
+absolute frame-time target is prescribed.
 
 Useful controls include `--resolution 24`, `--soft-young 2000`,
 `--stiff-young 200000`, `--soft-poisson 0.25`, `--stiff-poisson 0.3`,

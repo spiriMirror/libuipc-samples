@@ -1,8 +1,8 @@
 """Example 89 -- single FEM bunny on the ground with the MAS preconditioner.
 
 Cross-project MAS parity scene (vs Stiff-GIPC set_case7):
-  - FEM bunny2.msh, scale 0.2, translate (0, -0.65, 0), SNK E=1e7, nu=0.49,
-    rho=1000 (Stiff's SNK parametrization)
+  - FEM bunny2.msh, scale 0.2, translate (0, -0.65, 0), SNK E=1e5, nu=0.49,
+    rho=1000 (current sample material settings)
   - MAS preconditioner via config linear_system/fem_preconditioner = "mas"
     (Stiff P_type=1); auto-partitions all FEM geometries internally
   - floor y=-1, dt=0.01, g=-9.8, mu=0.4, kappa=1e8 (= Stiff raw Kappa 1e4
@@ -12,10 +12,11 @@ Cross-project MAS parity scene (vs Stiff-GIPC set_case7):
 
 Usage:
   python main.py                  # GUI with run/stop
-  python main.py --headless [N]   # N frames (default 100), logs per-solve
-                                  # PCG iteration counts + a summary line
+  python main.py --headless [N]   # N frames (default 100), frame statistics
+                                  # and a machine-readable summary
 """
-import os, sys
+import os, sys, time
+from pathlib import Path
 
 import numpy as np
 import uipc
@@ -28,12 +29,16 @@ from uipc.unit import MPa
 
 from asset_dir import AssetDir
 
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from benchmark_utils import (configure_benchmark_timers, emit_benchmark_result,
+                             report_timers_if_enabled, snapshot_frame_stats)
+
 HEADLESS = "--headless" in sys.argv
 _positional = [a for a in sys.argv[1:] if not a.startswith("--")]
 N_FRAMES = int(_positional[0]) if _positional else 100
 
-# headless mode needs the per-solve iteration lines
-Logger.set_level(Logger.Level.Info if HEADLESS else Logger.Level.Warn)
+configure_benchmark_timers()
+Logger.set_level(getattr(Logger.Level, os.environ.get("WB_LOG", "Warn")))
 
 workspace = AssetDir.output_path(__file__)
 engine = Engine("cuda", workspace)
@@ -86,9 +91,14 @@ world.init(scene)
 # --------------------------------------------------------------------------
 if HEADLESS:
     bunny_geo_id = bunny.geometries().ids()[0]
+    frame_ms = []
+    frame_stats = []
     for _ in range(N_FRAMES):
+        t0 = time.perf_counter()
         world.advance()
         world.retrieve()
+        frame_ms.append((time.perf_counter() - t0) * 1e3)
+        frame_stats.append(snapshot_frame_stats(engine))
         if world.frame() % 10 == 0:
             slot, _ = scene.geometries().find(bunny_geo_id)
             pos = np.asarray(
@@ -96,8 +106,19 @@ if HEADLESS:
             c = pos.mean(axis=0)
             print(f"track f{world.frame()} centroid=({c[0]:.4f},{c[1]:.4f},{c[2]:.4f})",
                   flush=True)
-    print(f"BENCH DONE frames={N_FRAMES}", flush=True)
-    Timer.report()
+    slot, _ = scene.geometries().find(bunny_geo_id)
+    pos = np.asarray(
+        slot.geometry().vertices().find("position").view()).reshape(-1, 3)
+    final_centroid = pos.mean(axis=0)
+    emit_benchmark_result(
+        frame_ms,
+        frame_stats,
+        observables={
+            "final_frame": int(world.frame()),
+            "bunny_centroid": [float(value) for value in final_centroid],
+        },
+    )
+    report_timers_if_enabled()
 else:
     import polyscope as ps
     from polyscope import imgui

@@ -1,4 +1,4 @@
-"""Shared utilities for the 40_distance_diagnoser examples."""
+"""Shared utilities for the 41_distance_diagnoser examples."""
 
 import numpy as np
 import keyboard

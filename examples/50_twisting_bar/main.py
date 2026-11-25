@@ -1,4 +1,4 @@
-"""Example 92 -- Stiff-GIPC set_case5: twisting bar with animated soft constraints.
+"""Example 50 -- Stiff-GIPC set_case5: twisting bar with animated soft constraints.
 
 Port of Stiff-GIPC gl_main.cu set_case5: high_mat.msh bar (E=1e4, nu=0.48,
 rho=1000), gravity OFF, both ends (|x| > 0.5) driven by soft position

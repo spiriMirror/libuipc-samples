@@ -1,11 +1,11 @@
-"""Example 91 -- Stiff-GIPC set_case4: pinned cloth (hanging by two corners).
+"""Example 49 -- Stiff-GIPC set_case4: pinned cloth (hanging by two corners).
 
 Port of Stiff-GIPC gl_main.cu set_case4: cloth_high.obj rotated 90 deg about
 the X axis (hanging vertically), scaled 0.6, lifted to y=+1; the two top
 corners (max-y edge vertices at min/max x) are pinned. Stiff runs this case
 with P_type=0 (diagonal preconditioner), so MAS is left off here.
 
-The cloth uses the shared example 88 material preset: stretch E=5e4,
+The cloth uses the shared example 46 material preset: stretch E=5e4,
 shear E=1e1, nu=0.49, one-sided thickness r=1e-3, rho=200,
 strain_rate=100, and bending E=3e4. Transform order matches Stiff exactly:
 rotate, then scale, then translate.

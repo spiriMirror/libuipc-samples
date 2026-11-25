@@ -1,4 +1,4 @@
-"""Example 87 -- a URDF robot hand with a rigid cube on the ground.
+"""Example 45 -- a URDF robot hand with a rigid cube on the ground.
 
 The hand's links are affine bodies pinned by soft transform constraints;
 pose the hand with the GUI sliders, then press `run` to let contact resolve

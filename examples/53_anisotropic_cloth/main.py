@@ -151,7 +151,7 @@ def main():
     parser.add_argument("--stiff-poisson", type=float, default=0.3)
     parser.add_argument("--traction", type=float, default=10., help="Edge traction in N/m")
     parser.add_argument("--output", type=Path, default=(
-        Path(__file__).resolve().parents[2] / "output/examples/95_anisotropic_cloth"))
+        Path(__file__).resolve().parents[2] / "output/examples/53_anisotropic_cloth"))
     args = parser.parse_args()
     if args.resolution < 2 or (args.headless is not None and args.headless < 1):
         parser.error("resolution must be >= 2 and headless frames must be positive")

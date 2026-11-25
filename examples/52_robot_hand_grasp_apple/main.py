@@ -1,4 +1,4 @@
-"""Example 94 -- a four-finger URDF hand picks and places a free apple.
+"""Example 52 -- a four-finger URDF hand picks and places a free apple.
 
 The scene directly exercises libuipc: 17 quasi-static ABD hand links follow
 per-substep SoftTransformConstraint targets, while an unconstrained ABD apple
@@ -73,7 +73,7 @@ def scene_config():
     config["gravity"] = [[0.0], [-9.81], [0.0]]
     config["contact"]["constitution"] = "ipc"
     config["contact"]["d_hat"] = 1e-3
-    # Loaded sample-87 collision meshes contain two known zero-volume/open
+    # Loaded sample-45 collision meshes contain two known zero-volume/open
     # fragments. UrdfIO and contact support them; the original assets stay intact.
     config["sanity_check"]["enable"] = 0
     config["extras"]["strict_mode"]["enable"] = 1

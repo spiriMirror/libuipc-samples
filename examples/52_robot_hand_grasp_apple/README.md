@@ -1,6 +1,6 @@
 # 94 — Robot hand grasps and places an apple
 
-This example turns the manually posed hand from sample 87 into a reproducible,
+This example turns the manually posed hand from sample 45 into a reproducible,
 four-finger pick-and-place simulation. It loads the same URDF collision meshes
 and drives every link with `SoftTransformConstraint`; the apple is a free ABD
 body with no animation, fixed flag or attachment. Gravity, IPC normal contact
@@ -13,14 +13,14 @@ opens and retreats. Smoothstep interpolation gives each scripted stage zero
 endpoint velocity. It changes physical servo targets, not solved trajectories.
 
 ```bash
-cd examples/94_robot_hand_grasp_apple
+cd examples/52_robot_hand_grasp_apple
 python main.py
 python main.py --headless 500
 ```
 
 The GUI advances four solver steps per displayed output frame. The headless mode
 writes `validation.json` and `trajectory.npz` under
-`output/examples/94_robot_hand_grasp_apple/`. Add `--write-surfaces` to export
+`output/examples/52_robot_hand_grasp_apple/`. Add `--write-surfaces` to export
 OBJ surfaces at representative action frames. Short headless runs use a frame
 count suffix such as `validation_0050.json`, so they never replace the complete
 500-frame evidence.
@@ -39,7 +39,7 @@ four-pad joint solution from the verified Blender integration, whose local
 coordinates are Z-up; `BASIS` in `main.py` performs the explicit vector mapping.
 Joint angles themselves are unchanged.
 
-The robot follows sample 87's quasi-static ABD design: rigidity 100 MPa,
+The robot follows sample 45's quasi-static ABD design: rigidity 100 MPa,
 density 5000 kg/m³ and translation/rotation strength ratios 10000. Internal hand
 contact is disabled, while hand/apple/table contact remains enabled with hand
 friction 0.8. The apple uses rigidity 100 MPa and density 820 kg/m³. Its closed
@@ -60,7 +60,7 @@ lifted the apple 0.2180 m, transported it 0.4495 m, and ended with RMS center
 speed about `5.83e-11 m/s`. The four fingertip distance ranges were
 0.95–55.6 micrometers at frame 250 and 0.97–40.0 micrometers at frame 325.
 
-The sample-87 URDF assets contain known isolated zero-volume/open collision
-fragments, so scene sanity checking is disabled as in sample 87; strict solver
+The sample-45 URDF assets contain known isolated zero-volume/open collision
+fragments, so scene sanity checking is disabled as in sample 45; strict solver
 failure reporting remains enabled. This is a scripted position-servo example,
 not a calibrated torque-controlled robot or actuator-force validation.

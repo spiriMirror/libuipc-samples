@@ -1,8 +1,8 @@
-"""Example 90 -- Stiff-GIPC set_case1: alternating ABD/FEM cube stack.
+"""Example 48 -- Stiff-GIPC set_case1: alternating ABD/FEM cube stack.
 
 Port of Stiff-GIPC gl_main.cu set_case1: a 4x4 grid of cube layers, 8 layers
 interleaved FEM (E=1e4) / ABD (E=1e5 -> the ABD constitution mapping uses
-100 MPa, see example 88 notes), falling onto the floor y=-1.
+100 MPa, see example 46 notes), falling onto the floor y=-1.
 
 Stiff parameters: cube = stiff_cube.msh (0.4-size, y-center 0.3), scale 0.4,
 layer spacing 0.4, grid spacing 0.2 centered at origin; FEM layers at

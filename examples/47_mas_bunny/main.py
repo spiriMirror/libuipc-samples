@@ -1,4 +1,4 @@
-"""Example 89 -- single FEM bunny on the ground with the MAS preconditioner.
+"""Example 47 -- single FEM bunny on the ground with the MAS preconditioner.
 
 Cross-project MAS parity scene (vs Stiff-GIPC set_case7):
   - FEM bunny2.msh, scale 0.2, translate (0, -0.65, 0), SNK E=1e5, nu=0.49,

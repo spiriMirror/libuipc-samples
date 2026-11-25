@@ -1,7 +1,7 @@
 """
 Prismatic joint built from body-local attachment points.
 
-Mirror of `examples/84_abd_revolute_joint_local`, but using the
+Mirror of `examples/42_abd_revolute_joint_local`, but using the
 *local-coordinate* overload of `AffineBodyPrismaticJoint.create_geometry`
 instead of the revolute version.
 

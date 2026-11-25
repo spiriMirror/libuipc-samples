@@ -1,9 +1,9 @@
-"""Example 93 -- Stiff-GIPC set_case6: cube wall falling onto a pinned cloth.
+"""Example 51 -- Stiff-GIPC set_case6: cube wall falling onto a pinned cloth.
 
 Port of Stiff-GIPC gl_main.cu set_case6: an 8x8x15 wall of interleaved ABD
 cube layers (Stiff E=1e6 and 5e4, but Stiff forces ABD Young's to 1e7
 internally, so both groups map to the same 100 MPa ABD constitution here;
-see example 88 notes) rises from y~1.05 and falls onto a cloth pinned at
+see example 46 notes) rises from y~1.05 and falls onto a cloth pinned at
 its |x|>1.5 sides (cloth_high.obj, scale 1.5 then translate y+0.35 in
 Stiff's transform order, i.e. v' = 1.5*(v + (0,0.35,0))).
 

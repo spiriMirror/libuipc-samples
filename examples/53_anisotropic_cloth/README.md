@@ -29,7 +29,7 @@ The GUI shows the three sheets side by side and reports mean directional edge
 strains. Click **Run** to start. The headless command checks finite positions,
 fixed pins and reduced strain along each stiff direction, then writes
 `summary.json` and `cloth_positions.npz` beneath
-`output/examples/95_anisotropic_cloth/`. This is a dynamic comparison at a
+`output/examples/53_anisotropic_cloth/`. This is a dynamic comparison at a
 finite frame count, not an equilibrium measurement.
 
 Headless runs also emit `BENCHMARK_RESULT` with per-frame wall times, solver

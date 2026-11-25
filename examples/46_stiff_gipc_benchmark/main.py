@@ -1,4 +1,4 @@
-"""Example 88 -- two FEM bunnies + cloth, MAS preconditioner benchmark.
+"""Example 46 -- two FEM bunnies + cloth, MAS preconditioner benchmark.
 
 Derived from the Stiff-GIPC set_case2 benchmark: the original ABD bunny is
 replaced by a second FEM bunny. The MAS preconditioner is enabled via scene
@@ -25,7 +25,7 @@ Usage:
   python main.py --headless [N]   # benchmark: N frames (default 250), no GUI
 
 Both modes write the tracked-body centroids (upper bunny, lower bunny) to
-output/examples/88_stiff_gipc_benchmark/traj.csv and print a timing summary
+output/examples/46_stiff_gipc_benchmark/traj.csv and print a timing summary
 when the run completes, for cross-project comparison.
 
 Env knobs: UIPC_BENCHMARK_TIMERS=1 enables Timer reports (WB_TIMER is a legacy

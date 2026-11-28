@@ -22,7 +22,7 @@ def apply_hand_abd(controller, urdf_path):
             abd.apply_to(geo, stiffness, mass_density=density)
             continue
 
-        # The collision surfaces of these links have non-manifold or open edges.
+        # These collision proxies contain overlapping closed components.
         inertial = robot.find(f"link[@name='{name}']/inertial")
         mass = float(inertial.find("mass").attrib["value"])
         origin = inertial.find("origin").attrib

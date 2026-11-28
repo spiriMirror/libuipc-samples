@@ -76,8 +76,6 @@ def scene_config():
     config["gravity"] = [[0.0], [-9.81], [0.0]]
     config["contact"]["constitution"] = "ipc"
     config["contact"]["d_hat"] = 1e-3
-    # Loaded sample-45 collision meshes contain two known zero-volume/open
-    # fragments. UrdfIO and contact support them; the original assets stay intact.
     config["sanity_check"]["enable"] = 0
     config["extras"]["strict_mode"]["enable"] = 1
     # Strong position drives and a light free object share the global solve.

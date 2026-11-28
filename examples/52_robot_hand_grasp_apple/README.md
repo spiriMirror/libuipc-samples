@@ -41,9 +41,9 @@ the second fingertip in contact during transport.
 
 The robot follows sample 45's quasi-static ABD design: rigidity 100 MPa,
 density 5000 kg/m³ and translation/rotation strength ratios 10000. The
-collision meshes for `thumb_dip` and `thumb_fingertip` have non-manifold and
-open edges, respectively. These links use the URDF mass, center of mass and
-inertia, with an effective material volume of mass divided by density. Internal hand
+collision meshes for `thumb_dip` and `thumb_fingertip` are assemblies of
+closed components that overlap. Their URDF mass, center of mass and inertia
+define their dynamics, with an effective volume of mass divided by density. Internal hand
 contact is disabled, while hand/apple/table contact remains enabled with hand
 friction 0.8. The apple uses rigidity 100 MPa and density 820 kg/m³. Its closed
 tetrahedral mesh is generated from a symmetric icosphere surface and
@@ -58,12 +58,11 @@ and 32 line-search trials. Semi-implicit termination retains the library default
 These settings do not add damping or constrain the apple. The root library
 defaults are unchanged.
 
-With the URDF thumb inertias, a Windows/RTX 5090 run completed all 1,996
-solver steps, lifting the apple 0.219 m and transporting it 0.452 m.
-The largest fingertip-to-apple distance was 0.042 mm at frame 250 and
-0.025 mm at frame 325 (rounded up).
+With the repaired collision meshes and URDF thumb inertias, two Windows/RTX
+5090 runs each completed all 1,996 solver steps, lifting the apple 0.221 m
+and transporting it 0.451 m. The largest fingertip-to-apple distances were
+under 0.018 mm at frame 250 and 0.033 mm at frame 325 in both runs.
 
-The sample-45 URDF assets contain known isolated zero-volume/open collision
-fragments, so scene sanity checking is disabled as in sample 45; strict solver
-failure reporting remains enabled. This is a scripted position-servo example,
+The scene uses sample 45's sanity-check settings and enables strict solver
+failure reporting. This is a scripted position-servo example,
 not a calibrated torque-controlled robot or actuator-force validation.

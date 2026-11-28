@@ -66,10 +66,10 @@ def load_hand(scene: Scene, contact) -> HandDriver:
     print(urdf_config)
     urdf_config['load_visual_mesh'] = False
     arm = scene.objects().create('arm')
-    controller = UrdfIO(urdf_config).read(
-        arm, f'{paths.urdf_dir()}/robot_hand/robot_hand.urdf')
+    urdf_path = f'{paths.urdf_dir()}/robot_hand/robot_hand.urdf'
+    controller = UrdfIO(urdf_config).read(arm, urdf_path)
 
-    make_link_constitutions(controller, contact)
+    make_link_constitutions(controller, contact, urdf_path)
     scene.animator().insert(arm, hold_current_pose)
     return controller
 

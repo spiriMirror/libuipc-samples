@@ -29,7 +29,7 @@
     "3": 0.10641559613928366,
     "4": -0.1883404392668102,
     "5": 1.1235267329372602,
-    "6": 0.7594144482373759,
+    "6": 0.8794144482373759,
     "7": -0.26901871753220574,
     "8": -0.3084997026378015,
     "9": 2.058448069697005,
@@ -41,5 +41,5 @@
     "15": -0.48364012790853717
   },
   "finger_count": 4,
-  "source": "The validated four-pad grasp used by the libuipc Blender integration"
+  "source": "Adapted from the libuipc Blender four-pad grasp. Joint 6 closes an additional 0.12 rad for the URDF thumb inertias."
 }

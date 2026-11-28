@@ -38,6 +38,9 @@ from uipc.unit import MPa
 
 from asset_dir import CASE_DIR, output_dir, urdf_path
 
+sys.path.append(str(CASE_DIR.parent))
+from robot_hand_mass import apply_hand_abd
+
 
 FPS = 30
 SUBSTEPS = 4
@@ -87,15 +90,11 @@ def scene_config():
     return config
 
 
-def apply_hand_constitutions(controller, contact):
-    abd = AffineBodyConstitution()
+def apply_hand_constitutions(controller, contact, source):
     drive = SoftTransformConstraint()
-    links = {}
-    for slot in controller.links():
+    links = apply_hand_abd(controller, source)
+    for slot in links.values():
         geometry = slot.geometry()
-        name = geometry.meta().find("urdf/name").view()[0]
-        links[name] = slot
-        abd.apply_to(geometry, 100 * MPa, mass_density=5e3)
         view(geometry.instances().find(builtin.is_dynamic))[:] = 0
         drive.apply_to(geometry, np.array([1e4, 1e4]))
         view(geometry.instances().find(builtin.is_constrained))[:] = 1
@@ -228,8 +227,9 @@ def build_world():
     hand = scene.objects().create("robot_hand")
     urdf_config = UrdfIO.default_config()
     urdf_config["load_visual_mesh"] = False
-    controller = UrdfIO(urdf_config).read(hand, str(urdf_path()))
-    links = apply_hand_constitutions(controller, hand_contact)
+    source = urdf_path()
+    controller = UrdfIO(urdf_config).read(hand, str(source))
+    links = apply_hand_constitutions(controller, hand_contact, source)
 
     with (CASE_DIR / "grasp_plan.json").open(encoding="utf-8") as stream:
         trajectory = HandTrajectory(controller, json.load(stream))

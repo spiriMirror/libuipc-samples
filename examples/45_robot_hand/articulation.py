@@ -12,6 +12,7 @@ Three layers, bottom up:
 
 import json
 import pathlib
+import sys
 
 import ikpy.chain
 import numpy as np
@@ -19,23 +20,22 @@ import polyscope.imgui as imgui
 
 import uipc
 from uipc import Animation, builtin
-from uipc.constitution import AffineBodyConstitution, SoftTransformConstraint
+from uipc.constitution import SoftTransformConstraint
 from uipc.core import ContactElement
 from uipc.geometry import UrdfController
-from uipc.unit import MPa
+
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
+from robot_hand_mass import apply_hand_abd
 
 CLOSE_TOL = 1e-6
 
 
-def make_link_constitutions(controller: UrdfController, contact: ContactElement):
+def make_link_constitutions(controller: UrdfController, contact: ContactElement, urdf_path):
     """Attach ABD dynamics + soft transform constraints to every URDF link."""
-    abd = AffineBodyConstitution()
     stc = SoftTransformConstraint()
-    for slot in controller.links():
+    for label, slot in apply_hand_abd(controller, urdf_path).items():
         geo = slot.geometry()
-        label = geo.meta().find('urdf/name').view()[0]
         print(f'  link `{label}` <- affine body + soft transform')
-        abd.apply_to(geo, 100 * MPa, mass_density=5e3)
         uipc.view(geo.instances().find(builtin.is_dynamic))[:] = 0
         contact.apply_to(geo)
         stc.apply_to(geo, np.array([10e3, 10e3]))

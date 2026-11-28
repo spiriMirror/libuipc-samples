@@ -1,4 +1,4 @@
-# 94 — Robot hand grasps and places an apple
+# 52 — Robot hand grasps and places an apple
 
 This example turns the manually posed hand from sample 45 into a reproducible,
 four-finger pick-and-place simulation. It loads the same URDF collision meshes
@@ -34,13 +34,16 @@ failure details before a failed full validation raises.
 
 ## Coordinate and solver notes
 
-`UrdfIO` uses libuipc/Polyscope's Y-up convention. `grasp_plan.json` records the
-four-pad joint solution from the verified Blender integration, whose local
-coordinates are Z-up; `BASIS` in `main.py` performs the explicit vector mapping.
-Joint angles themselves are unchanged.
+`UrdfIO` uses libuipc/Polyscope's Y-up convention. `BASIS` in `main.py` maps
+the Blender grasp plan from Z-up coordinates. With the thumb links' URDF
+inertias, the closed target for joint 6 is increased by 0.12 rad to keep
+the second fingertip in contact during transport.
 
 The robot follows sample 45's quasi-static ABD design: rigidity 100 MPa,
-density 5000 kg/m³ and translation/rotation strength ratios 10000. Internal hand
+density 5000 kg/m³ and translation/rotation strength ratios 10000. The
+collision meshes for `thumb_dip` and `thumb_fingertip` have non-manifold and
+open edges, respectively. These links use the URDF mass, center of mass and
+inertia, with an effective material volume of mass divided by density. Internal hand
 contact is disabled, while hand/apple/table contact remains enabled with hand
 friction 0.8. The apple uses rigidity 100 MPa and density 820 kg/m³. Its closed
 tetrahedral mesh is generated from a symmetric icosphere surface and
@@ -55,10 +58,10 @@ and 32 line-search trials. Semi-implicit termination retains the library default
 These settings do not add damping or constrain the apple. The root library
 defaults are unchanged.
 
-The validated Windows/RTX 5090 full run completed all 1,996 solver steps. It
-lifted the apple 0.2180 m, transported it 0.4495 m, and ended with RMS center
-speed about `5.83e-11 m/s`. The four fingertip distance ranges were
-0.95–55.6 micrometers at frame 250 and 0.97–40.0 micrometers at frame 325.
+With the URDF thumb inertias, a Windows/RTX 5090 run completed all 1,996
+solver steps, lifting the apple 0.219 m and transporting it 0.452 m.
+The largest fingertip-to-apple distance was 0.042 mm at frame 250 and
+0.025 mm at frame 325 (rounded up).
 
 The sample-45 URDF assets contain known isolated zero-volume/open collision
 fragments, so scene sanity checking is disabled as in sample 45; strict solver
